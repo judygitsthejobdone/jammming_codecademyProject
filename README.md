@@ -33,11 +33,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Authentication
 
 ## Features Implemented
-- under construction
+- Static SearchBar and SearchResults components are under construction
 
 ## Future Work
 - Implement styling api
-- 
 - Create static components
     - App
     - SearchBar
