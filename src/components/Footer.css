@@ -1,0 +1,13 @@
+footer {
+    text-align: center;
+    text-wrap: wrap;
+    position: sticky;
+    bottom: 0;
+    padding: 5px;
+    background-color: lightgray;
+    color: black;
+    font-size: calc(5px + 1vmin);
+    /*a {
+      text-decoration: underline;
+    }*/
+  }

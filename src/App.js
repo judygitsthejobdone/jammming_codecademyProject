@@ -1,6 +1,7 @@
 import './App.css';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <header className="App-header">
         <a
           className="App-link"
-          href='#'
+          href='.'
           rel="noopener noreferrer"
         >
           Jammming with Judy
@@ -16,6 +17,7 @@ function App() {
       </header>
       <SearchBar />
       <SearchResults />
+      <Footer />
     </div>
   );
 }
