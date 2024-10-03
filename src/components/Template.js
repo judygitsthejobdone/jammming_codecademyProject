@@ -6,6 +6,6 @@ function Component() {
         <p>Edit Component contents</p>
       </div>
     );
-  }
+}
   
   export default Component;

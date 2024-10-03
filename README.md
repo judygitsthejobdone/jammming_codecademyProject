@@ -26,6 +26,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Technologies Used
 - HTML
 - CSS
+- React Bootstrap
 - JavaScript
 - React
 - HTTP Requests and Responses
@@ -33,7 +34,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Authentication
 
 ## Features Implemented
-- Static SearchBar and SearchResults components are under construction
+- Static SearchBar and SearchResults components
+- Footer component
 
 ## Future Work
 - Implement styling api
