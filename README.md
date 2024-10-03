@@ -1,6 +1,77 @@
-# Getting Started with Create React App
+# Jammming 
+Portfolio project for Codecademy skill path "Create a Front-End App with React".
+
+The purpose is to build a Spotify integration web app using React.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Project Requirements
+- Build a web app using React
+- Version control your application with Git and host the repository on GitHub
+- Integrate with Spotify or another API
+- Deploy your application
+- Write a README (using Markdown) that documents your project, including:
+    - The purpose of your project
+    - Technologies used
+    - Features
+    - Future work
+
+### Required Features
+- Users can search for songs by song title.
+    - You can also include functionality to search by other attributes like artist’s name, genre, etc.
+- Users can see information about each song like title, artist, and album for songs they queried
+    - You can also include other information – the design is up to you
+- Users can export their custom playlist to their personal Spotify account
+
+## Technologies Used
+- HTML
+- CSS
+- JavaScript
+- React
+- HTTP Requests and Responses
+- Spotify API
+- Authentication
+
+## Features Implemented
+- under construction
+
+## Future Work
+- Implement styling api
+- 
+- Create static components
+    - App
+    - SearchBar
+        - Search button
+    - SearchResults
+    - Playlist
+    - Tracklist
+    - Track
+    - Save to Spotify button
+- Implement Track Listing in The Component Tree
+    
+    - When a user requests data from Spotify, the JSON response will contain a set of song tracks. 
+    
+        Your Jammming web app should display the song name, artist, and album for each track in the results list.
+
+        Implement this by creating a unidirectional data flow from your root component. 
+        
+        The root component should pass down the search results to a child component that will return each individual track to be rendered.
+
+        Since the Spotify API is not currently set up to be called, you may hard-code an array of track objects to be passed down for now.
+
+- Implement Playlists in The Component Tree
+    
+    - When a user requests data from Spotify, the JSON response will contain a set of song tracks. 
+
+- Implement Adding Songs to custom playlist
+- Implement Removing Songs from custom playlist
+- Implement Playlist renaming
+- Implement save playlist to user acct (mock)
+- Implement Spotify API Search function
+- Implement Spotify API Save Playlist to user acct function
+- Test and debug
+- Review Project
+- Deploy on gh-pages
 
 ## Available Scripts
 
