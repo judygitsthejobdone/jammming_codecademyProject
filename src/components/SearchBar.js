@@ -1,17 +1,18 @@
 //import './SearchBar.css';
 import { useState } from "react";
 
-function handleSubmit(event) {
-    event.preventDefault();
-};
-
-function SearchBar() {
+function SearchBar({handleSearch}) {
     const [search, setSearch] = useState();
     //const [artist, setArtist] = useState();
     //const [genre, setGenre] = useState();
     const [year, setYear] = useState('');
     const pattern = "^[0-9]{4}(-[0-9]{4})?";
 
+    function handleSubmit(event) {
+        event.preventDefault();
+        console.log(`Searching Spotify Web API for "${search}"`)
+        handleSearch(search);
+    };
     function handleSearchInput({target}) {
         setSearch(target.value)
     };
