@@ -1,9 +1,15 @@
 //import './SearchResults.css';
+import Result from "./Result";
 
 function SearchResults() {
+  /**For each arr item received from API feed to Result component to render */
     return (
       <div>
-        <p>Edit SearchResults contents</p>
+        <Result />
+        <Result />
+        <Result />
+        <Result />
+        <Result />
       </div>
     );
   }
