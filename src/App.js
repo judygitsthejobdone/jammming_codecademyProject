@@ -2,8 +2,17 @@ import './App.css';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Footer from './components/Footer';
+import searchSpotify from './utils/SpotifyWebAPI';
+import { useState } from 'react';
 
 function App() {
+  const [results, setResults] = useState(null);
+  
+  const handleSearch = (q, type) => { 
+    searchSpotify(q, type)
+      .then( res => setResults(res) )
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,8 +24,8 @@ function App() {
           Jammming with Judy
         </a>
       </header>
-      <SearchBar />
-      <SearchResults />
+      <SearchBar handleSearch={handleSearch} />
+      <SearchResults results={results} />
       <Footer />
     </div>
   );

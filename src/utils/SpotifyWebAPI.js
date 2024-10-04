@@ -379,4 +379,4 @@ const exampleResponse = {
 
 searchSpotify();
 
-//export default searchSpotify;
+export default searchSpotify;
