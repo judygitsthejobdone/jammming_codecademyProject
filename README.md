@@ -36,14 +36,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Features Implemented
 - Static SearchBar and SearchResults components
 - Footer component
+- mock API
+- unidirectional dataflow 
 
 ## In Progress
--- unidirectional dataflow with mock API
+
 
 ## Future Work
 - Implement styling api
 - Create static components
-    - SearchResults
     - Playlist
     - Tracklist
     - Track
