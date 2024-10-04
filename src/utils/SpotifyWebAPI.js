@@ -1,8 +1,8 @@
-function searchSpotify() {
+async function searchSpotify(q,type) {
     /**The code below takes the response and formats it into an array of result objects 
      * To use a real response, replace "exampleResponse" with the actual response.
     */
-
+    await exampleResponse;
     return processResponse(exampleResponse);
 }
 
@@ -27,7 +27,7 @@ function processResponse(response) {
 
         resultsArray.push(obj)
     });
-    //console.log(JSON.stringify(resultsArray));
+    console.log(JSON.stringify(resultsArray));
     return resultsArray
 }
 
