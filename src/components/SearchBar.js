@@ -9,17 +9,23 @@ function SearchBar() {
     const [search, setSearch] = useState();
     //const [artist, setArtist] = useState();
     //const [genre, setGenre] = useState();
-    const [year, setYear] = useState();
+    const [year, setYear] = useState('');
+    const pattern = "^[0-9]{4}(-[0-9]{4})?";
+
     function handleSearchInput({target}) {
         setSearch(target.value)
     };
     function handleYearInput({target}) {
+        const regex = new RegExp("(^[0-9]{4}-[0-9]{0,4}$)|(^[0-9]{0,4}$)");
+        if (!regex.test(target.value)) {
+            return document.getElementById('year').reportValidity();
+        }
         setYear(target.value)
     };
 
     return (
         <div>
-        <form>
+        <form onSubmit={handleSubmit} >
             <label for="search" >Search: </label>
             <input 
                 id="search" 
@@ -31,12 +37,13 @@ function SearchBar() {
             <label for="year" > Limit by Year: </label><input 
                 id="year"
                 type="text" 
-                pattern="^[0-9]{4}(-[0-9]{4})?"
-                title="Use format YYYY or YYYY-YYYY"
-                value={year} 
+                pattern={pattern}
+                placeholder="e.g., 1999 or 1980-2001"
+                title="Use format YYYY or YYYY-YYYY. No others symbols or characters permitted."
+                value={year}
                 onChange={handleYearInput}
             ></input>
-            <button type="submit" onClick={handleSubmit} >Go</button>
+            <button type="submit">Go</button>
         </form>
         </div>
     );
