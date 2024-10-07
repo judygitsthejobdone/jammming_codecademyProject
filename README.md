@@ -50,7 +50,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 
 ## Future Work
-- Refactor SearchResults to use map instead of forEach
 - Implement styling api
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
