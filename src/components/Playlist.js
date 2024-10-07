@@ -23,7 +23,7 @@ function Playlist({tracklist, setTracklist}) {
         <input type="text" id="playlistName" maxLength={50} value={playlistName} onChange={handleNameChange}></input>
         {tracklist.map( ( track, index ) => <Track track={track} key={index} index={index} handleClick={removeTrack} buttonLabel="-" /> ) }
         <br />
-        <button type='button' onClick={handleSave}>Save Playlist</button>
+        <button type='button' onClick={handleSave}>Save to Spotify</button>
       </div>
     );
 }

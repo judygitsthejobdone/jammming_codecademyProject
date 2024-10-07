@@ -40,16 +40,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - mock API
 - Track Listing in The Component Tree
 - unidirectional dataflow 
-
-## In Progress
 - Implement Playlists in The Component Tree
-    - Create static Playlist Component
+    - Static Playlist Component
     - Name/Rename input
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
 
-## Future Work
+## In Progress
 
+
+## Future Work
+- Refactor SearchResults to use map instead of forEach
 - Implement styling api
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
