@@ -2,8 +2,6 @@
 import Track from "./Track";
 
 function SearchResults({results, setTracklist}) {
-  /**For each arr item received from API feed to Track component to render */
-  let jsx = [];
   const addTrack = ({target}) => {
     //code to addTrack to tracklist goes here
     setTracklist(prev => [...prev])
@@ -11,15 +9,16 @@ function SearchResults({results, setTracklist}) {
   }
 
   if(!results) {
-    jsx = <div><p>Start a search and start jammming!</p></div>;
+    return <div><p>Start a search and start jammming!</p></div>;
   } else if(!results.length) {
-    jsx = <div><p>Hmmm...we couldn't find anything. Please try a different search.</p></div>
-  } else {
-    results.forEach( (result, index) => {jsx.push(<Track track={result} key={index} index={index} handleClick={addTrack} buttonLabel="+" />)} ) 
-    jsx = <div>{jsx}</div>;
+    return <div><p>Hmmm...we couldn't find anything. Please try a different search.</p></div>;
   }
-  
-  return jsx;
-  }
+
+  return (
+    <div>
+      {results.map( (result, index) => <Track track={result} key={index} index={index} handleClick={addTrack} buttonLabel="+" /> )}
+    </div>
+  );
+};
   
   export default SearchResults;
