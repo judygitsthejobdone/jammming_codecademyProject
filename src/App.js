@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 function App() {
   const [results, setResults] = useState(null);
+  const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
   
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
@@ -26,8 +27,8 @@ function App() {
         </a>
       </header>
       <SearchBar handleSearch={handleSearch} />
-      <SearchResults results={results} />
-      <Playlist />
+      <SearchResults results={results} setTracklist={setTracklist} />
+      <Playlist tracklist={tracklist} setTracklist={setTracklist} />
       <Footer />
     </div>
   );
@@ -45,3 +46,13 @@ export default App;
     - Track
     - Save to Spotify button
      */
+
+    const mockTrack = {
+      "track":"Get High",
+      "album":"Side Effects EP",
+      "artist":"Chris Travis",
+      "src":"https://i.scdn.co/image/ab67616d00004851ffa4064cb0e135b5e1ca41a2",
+      "altText":"Side Effects EP album art",
+      "uri":"spotify:track:2HEoWCdoCM6JfTaEGGgxXX"
+  }
+  
