@@ -47,10 +47,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     - Tracks in Playlist with remove buttons
 
 ## In Progress
-
+- Implement styling api
 
 ## Future Work
-- Implement styling api
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
 - Implement Playlist renaming
