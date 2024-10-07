@@ -38,31 +38,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Static Track component
 - Footer component
 - mock API
+- Track Listing in The Component Tree
 - unidirectional dataflow 
+- Implement Playlists in The Component Tree
+    - Static Playlist Component
+    - Name/Rename input
+    - Save to Spotify button
+    - Tracks in Playlist with remove buttons
 
 ## In Progress
-- Create static components
-    - Playlist
+
 
 ## Future Work
-- Create static components
-    - Save to Spotify button
-- Implement Track Listing in The Component Tree
-    
-    - When a user requests data from Spotify, the JSON response will contain a set of song tracks. 
-    
-        Your Jammming web app should display the song name, artist, and album for each track in the results list.
-
-        Implement this by creating a unidirectional data flow from your root component. 
-        
-        The root component should pass down the search results to a child component that will return each individual track to be rendered.
-
-        Since the Spotify API is not currently set up to be called, you may hard-code an array of track objects to be passed down for now.
-
-- Implement Playlists in The Component Tree
-    
-    - When a user requests data from Spotify, the JSON response will contain a set of song tracks. 
-
+- Refactor SearchResults to use map instead of forEach
 - Implement styling api
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
