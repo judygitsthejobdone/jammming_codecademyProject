@@ -1,6 +1,7 @@
 import './App.css';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
+import Playlist from './components/Playlist';
 import Footer from './components/Footer';
 import searchSpotify from './utils/SpotifyWebAPI';
 import { useState } from 'react';
@@ -26,6 +27,7 @@ function App() {
       </header>
       <SearchBar handleSearch={handleSearch} />
       <SearchResults results={results} />
+      <Playlist />
       <Footer />
     </div>
   );
