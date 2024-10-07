@@ -34,20 +34,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Authentication
 
 ## Features Implemented
-- Static SearchBar and SearchResults components
+- Static SearchBar and SearchResults (replaces requested "Tracklist") components
+- Static Track component
 - Footer component
 - mock API
 - unidirectional dataflow 
 
 ## In Progress
-
-
-## Future Work
-- Implement styling api
 - Create static components
     - Playlist
-    - Tracklist
-    - Track
+
+## Future Work
+- Create static components
     - Save to Spotify button
 - Implement Track Listing in The Component Tree
     
@@ -65,6 +63,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     
     - When a user requests data from Spotify, the JSON response will contain a set of song tracks. 
 
+- Implement styling api
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
 - Implement Playlist renaming
@@ -74,6 +73,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Test and debug
 - Review Project
 - Deploy on gh-pages
+- Refactor to allow non-track results
+    - Create Track, Artist, and Album components
+    - Each result will be one of the 3 components depending on result type
+    - Track Result clicks to add to playlist
+    - Artist Result with click to search for artist tracks
+    - Album Result with click to search for album tracks
+- Refactor Artist and Album components to include option to add to playlist the top 5 tracks from artist or add full album instead of searching
 
 ## Available Scripts
 

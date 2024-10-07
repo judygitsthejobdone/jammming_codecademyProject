@@ -1,8 +1,8 @@
 //import './SearchResults.css';
-import Result from "./Result";
+import Track from "./Track";
 
 function SearchResults({results}) {
-  /**For each arr item received from API feed to Result component to render */
+  /**For each arr item received from API feed to Track component to render */
   let jsx = [];
 
   if(!results) {
@@ -10,7 +10,7 @@ function SearchResults({results}) {
   } else if(!results.length) {
     jsx = <div><p>Hmmm...we couldn't find anything. Please try a different search.</p></div>
   } else {
-    results.forEach( (result) => {jsx.push(<Result result={result} />)} ) 
+    results.forEach( (result) => {jsx.push(<Track result={result} />)} ) 
     jsx = <div>{jsx}</div>;
   }
   
