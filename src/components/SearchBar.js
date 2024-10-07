@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 function SearchBar({handleSearch}) {
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState('');
     //const [artist, setArtist] = useState();
     //const [genre, setGenre] = useState();
     const [year, setYear] = useState('');
@@ -27,7 +27,7 @@ function SearchBar({handleSearch}) {
     return (
         <div>
         <form onSubmit={handleSubmit} >
-            <label for="search" >Search: </label>
+            <label htmlFor="search" >Search: </label>
             <input 
                 id="search" 
                 type="search" 
@@ -35,7 +35,7 @@ function SearchBar({handleSearch}) {
                 value={search} 
                 onChange={handleSearchInput}
             ></input>
-            <label for="year" > Limit by Year: </label><input 
+            <label htmlFor="year" > Limit by Year: </label><input 
                 id="year"
                 type="text" 
                 pattern={pattern}
