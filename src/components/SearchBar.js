@@ -1,5 +1,10 @@
 //import './SearchBar.css';
 import { useState } from "react";
+import { Container, Stack, FormGroup } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import {Row, Col} from "react-bootstrap";
 
 function SearchBar({handleSearch}) {
     const [search, setSearch] = useState('');
@@ -25,28 +30,44 @@ function SearchBar({handleSearch}) {
     };
 
     return (
-        <div>
-        <form onSubmit={handleSubmit} >
-            <label htmlFor="search" >Search: </label>
-            <input 
-                id="search" 
-                type="search" 
-                placeholder="Track, Artist, or Genre" 
-                value={search} 
-                onChange={handleSearchInput}
-            ></input>
-            <label htmlFor="year" > Limit by Year: </label><input 
-                id="year"
-                type="text" 
-                pattern={pattern}
-                placeholder="e.g., 1999 or 1980-2001"
-                title="Use format YYYY or YYYY-YYYY. No others symbols or characters permitted."
-                value={year}
-                onChange={handleYearInput}
-            ></input>
-            <button type="submit">Go</button>
-        </form>
-        </div>
+        
+        <Form onSubmit={handleSubmit} ><Stack gap={1} className="ms-auto">
+            <Container fluid><Row>
+                <Col><FormGroup>
+                    <FloatingLabel
+                        label="Search"
+                    >
+                        <Form.Control 
+                            id="search" 
+                            type="search"
+                            size="lg" 
+                            placeholder="Track, Artist, or Genre" 
+                            value={search} 
+                            onChange={handleSearchInput}
+                        ></Form.Control>
+                    </FloatingLabel>
+                </FormGroup></Col>
+                <Col sm={4}><FormGroup>
+                    <FloatingLabel 
+                        label="Limit by Year"
+                    >
+                        <Form.Control 
+                            id="year"
+                            type="text" 
+                            pattern={pattern}
+                            size="md"
+                            placeholder="e.g., 1999 or 1980-2001"
+                            title="Use format YYYY or YYYY-YYYY. No others symbols or characters permitted."
+                            value={year}
+                            onChange={handleYearInput}
+                        ></Form.Control>
+                    </FloatingLabel>
+                </FormGroup></Col>
+            </Row></Container>
+            <Container><Button type="submit" >Go</Button></Container>
+        
+        </Stack></Form>
+        
     );
 }
 
