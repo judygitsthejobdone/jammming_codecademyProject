@@ -1,15 +1,15 @@
 //import './SearchBar.css';
 import { useState } from "react";
-import { Container, Stack, FormGroup } from "react-bootstrap";
-import Button from 'react-bootstrap/Button';
+import { Container, Stack, FormGroup, DropdownHeader } from "react-bootstrap";
+import Dropdown from 'react-bootstrap/Dropdown';
+import SplitButton from 'react-bootstrap/SplitButton';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import {Row, Col} from "react-bootstrap";
 
 function SearchBar({handleSearch}) {
     const [search, setSearch] = useState('');
-    //const [artist, setArtist] = useState();
-    //const [genre, setGenre] = useState();
+    const [searchType, setSearchType] = useState('');
     const [year, setYear] = useState('');
     const pattern = "^[0-9]{4}(-[0-9]{4})?";
 
@@ -28,6 +28,10 @@ function SearchBar({handleSearch}) {
         }
         setYear(target.value)
     };
+    function handleSearchType({target}) {
+        console.log(target.value)
+        setSearchType(target.value);
+    };
 
     return (
         
@@ -35,14 +39,14 @@ function SearchBar({handleSearch}) {
             <Container fluid><Row>
                 <Col><FormGroup>
                     <FloatingLabel
-                        label="Search"
+                        label={"Search"+searchType}
                     >
                         <Form.Control 
                             id="search" 
                             type="search"
                             size="lg" 
                             placeholder="Track, Artist, or Genre" 
-                            value={search} 
+                            value={search}
                             onChange={handleSearchInput}
                         ></Form.Control>
                     </FloatingLabel>
@@ -64,7 +68,19 @@ function SearchBar({handleSearch}) {
                     </FloatingLabel>
                 </FormGroup></Col>
             </Row></Container>
-            <Container><Button type="submit" >Go</Button></Container>
+            <Container><SplitButton 
+                type="submit" 
+                variant="primary" 
+                title="Go" 
+                autoClose="outside"
+            >
+                <DropdownHeader>header</DropdownHeader>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="album" value=" by album" active={searchType == " by album" ? true : false}>Albums</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="artist" value=" by artist" active={searchType == " by artist" ? true : false}>Artists</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value=" by song" active={searchType == " by song" ? true : false}>Songs</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="any" value="" active={searchType == "" ? true : false} >Any</Dropdown.Item>     
+            </SplitButton></Container>
         
         </Stack></Form>
         
