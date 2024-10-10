@@ -9,7 +9,7 @@ import {Row, Col} from "react-bootstrap";
 
 function SearchBar({handleSearch}) {
     const [search, setSearch] = useState('');
-    const [searchType, setSearchType] = useState('');
+    const [searchType, setSearchType] = useState(''); //NOTE: Search Type is visual only at this point
     const [year, setYear] = useState('');
     const pattern = "^[0-9]{4}(-[0-9]{4})?";
 
@@ -35,8 +35,8 @@ function SearchBar({handleSearch}) {
 
     return (
         
-        <Form onSubmit={handleSubmit} ><Stack gap={1} className="ms-auto">
-            <Container fluid><Row>
+        <Form inline onSubmit={handleSubmit} className="w-100" ><Stack gap={1}>
+            <Container fluid ><Row>
                 <Col><FormGroup>
                     <FloatingLabel
                         label={"Search"+searchType}
@@ -74,7 +74,7 @@ function SearchBar({handleSearch}) {
                 title="Go" 
                 autoClose="outside"
             >
-                <DropdownHeader>header</DropdownHeader>
+                <DropdownHeader>Limit search to...</DropdownHeader>
                 <Dropdown.Item as="button" onClick={handleSearchType} eventKey="album" value=" by album" active={searchType == " by album" ? true : false}>Albums</Dropdown.Item>
                 <Dropdown.Item as="button" onClick={handleSearchType} eventKey="artist" value=" by artist" active={searchType == " by artist" ? true : false}>Artists</Dropdown.Item>
                 <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value=" by song" active={searchType == " by song" ? true : false}>Songs</Dropdown.Item>
