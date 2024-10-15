@@ -45,9 +45,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     - Name/Rename input
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
+- Implement styling api
 
 ## In Progress
-- Implement styling api
+
 
 ## Future Work
 - Implement Adding Songs to custom playlist
