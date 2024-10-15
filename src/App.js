@@ -5,6 +5,9 @@ import Playlist from './components/Playlist';
 import Footer from './components/Footer';
 import searchSpotify from './utils/SpotifyWebAPI';
 import { Navbar, NavbarBrand} from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
 function App() {
@@ -28,8 +31,14 @@ function App() {
         </NavbarBrand>
       </Navbar>
       <Navbar sticky="top" data-bs-theme="light" className="bg-dark justify-content-around" ><SearchBar handleSearch={handleSearch} /></Navbar>
-      <SearchResults results={results} setTracklist={setTracklist}/>
-      <Playlist tracklist={tracklist} setTracklist={setTracklist} />
+      <Container fluid>
+        <Row xs={1} md={2} >
+          <Col className="bg-dark" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
+          <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} /></Col>
+        </Row>
+      </Container>
+      
+      
       <Footer />
     </div>
   );
