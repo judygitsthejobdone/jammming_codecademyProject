@@ -15,7 +15,7 @@ function SearchBar({handleSearch}) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(`Searching Spotify Web API for "${search}"`)
+        console.log(`Searching Spotify Web API${searchType} for "${search}"`)
         handleSearch(search);
     };
     function handleSearchInput({target}) {
@@ -28,7 +28,9 @@ function SearchBar({handleSearch}) {
         }
         setYear(target.value)
     };
-    function handleSearchType({target}) {
+    function handleSearchType(event) {
+        event.preventDefault();
+        const {target} = event;
         console.log(target.value)
         setSearchType(target.value);
     };
