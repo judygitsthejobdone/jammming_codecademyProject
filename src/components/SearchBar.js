@@ -70,7 +70,10 @@ function SearchBar({handleSearch}) {
                     </FloatingLabel>
                 </FormGroup></Col>
             </Row></Container>
-            <Container><SplitButton 
+            <Container fluid>
+            <Row className="text-center">
+            <Col>
+            <SplitButton 
                 type="submit" 
                 variant="primary" 
                 title="Go" 
@@ -82,7 +85,10 @@ function SearchBar({handleSearch}) {
                 <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value=" by song" active={searchType == " by song" ? true : false}>Songs</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item as="button" onClick={handleSearchType} eventKey="any" value="" active={searchType == "" ? true : false} >Any</Dropdown.Item>     
-            </SplitButton></Container>
+            </SplitButton>
+            </Col>
+            </Row>
+            </Container>
         
         </Stack></Form>
         
