@@ -1,9 +1,13 @@
-import './App.css';
+//import './App.css';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
 import searchSpotify from './utils/SpotifyWebAPI';
+import { Navbar, NavbarBrand} from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
 function App() {
@@ -17,18 +21,24 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <a
+      <Navbar sticky='top' data-bs-theme="dark" className="bg-dark justify-content-center" >
+        <NavbarBrand
           className="App-link"
           href='.'
           rel="noopener noreferrer"
         >
           Jammming with Judy
-        </a>
-      </header>
-      <SearchBar handleSearch={handleSearch} />
-      <SearchResults results={results} setTracklist={setTracklist} />
-      <Playlist tracklist={tracklist} setTracklist={setTracklist} />
+        </NavbarBrand>
+      </Navbar>
+      <Navbar sticky="top" data-bs-theme="light" className="bg-dark justify-content-around" ><SearchBar handleSearch={handleSearch} /></Navbar>
+      <Container fluid>
+        <Row xs={1} md={2} >
+          <Col className="bg-dark pb-3" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
+          <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} /></Col>
+        </Row>
+      </Container>
+      
+      
       <Footer />
     </div>
   );

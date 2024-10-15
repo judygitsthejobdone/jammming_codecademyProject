@@ -3,7 +3,7 @@ footer {
     text-wrap: wrap;
     position: sticky;
     bottom: 0;
-    padding: 5px;
+    padding-top: 2px;
     background-color: lightgray;
     color: black;
     font-size: calc(5px + 1vmin);

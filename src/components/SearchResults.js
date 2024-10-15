@@ -1,4 +1,5 @@
 //import './SearchResults.css';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Track from "./Track";
 
 function SearchResults({results, setTracklist}) {
@@ -15,10 +16,16 @@ function SearchResults({results, setTracklist}) {
   }
 
   return (
-    <div>
-      {results.map( (result, index) => <Track track={result} key={index} index={index} handleClick={addTrack} buttonLabel="+" /> )}
-    </div>
+    <ListGroup variant='flush'>
+      {results.map( (result, index) => <ListGroup.Item key={index} ><Track track={result} key={index} index={index} handleClick={addTrack} buttonLabel="+" /></ListGroup.Item> )}
+    </ListGroup>
   );
 };
   
   export default SearchResults;
+
+//listgroup and items
+//Add the flush variant to remove outer borders and rounded corners to render list group items edge-to-edge in a parent container such as a Card.
+//Toggle the action prop to create actionable list group items, with disabled, hover and active styles.
+
+
