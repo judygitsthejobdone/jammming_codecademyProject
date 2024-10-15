@@ -35,7 +35,7 @@ function SearchBar({handleSearch}) {
 
     return (
         
-        <Form inline onSubmit={handleSubmit} className="w-100" ><Stack gap={1}>
+        <Form inline='true' onSubmit={handleSubmit} className="w-100" ><Stack gap={1}>
             <Container fluid ><Row>
                 <Col><FormGroup>
                     <FloatingLabel
