@@ -2,6 +2,7 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
 
 function Track({track, handleClick, buttonLabel, index}) {
     return (
@@ -11,7 +12,7 @@ function Track({track, handleClick, buttonLabel, index}) {
         <Col  ><h6>{track.track}</h6>  </Col>
         <Col  ><p>{track.artist}</p></Col>
         <Col xs="8" ><p><small>{track.album}</small></p></Col>
-        <Col className="col-xs-1 col-sm-1"><button type="button" name="add" onClick={handleClick} value={index}>{buttonLabel}</button></Col>
+        <Col className="col-xs-1 col-sm-1"><Button type="button" variant="outline-secondary" name="add" onClick={handleClick} value={index}><strong>{buttonLabel}</strong></Button></Col>
       </Row>
       </Container>
     );

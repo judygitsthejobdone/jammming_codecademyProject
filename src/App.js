@@ -33,7 +33,7 @@ function App() {
       <Navbar sticky="top" data-bs-theme="light" className="bg-dark justify-content-around" ><SearchBar handleSearch={handleSearch} /></Navbar>
       <Container fluid>
         <Row xs={1} md={2} >
-          <Col className="bg-dark" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
+          <Col className="bg-dark pb-3" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
           <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} /></Col>
         </Row>
       </Container>
