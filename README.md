@@ -48,13 +48,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Implement styling api
 
 ## In Progress
-
-
-## Future Work
+- Implement save playlist to user acct (mock)
+- Implement Playlist renaming
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
-- Implement Playlist renaming
-- Implement save playlist to user acct (mock)
+
+## Future Work
 - Implement Spotify API Search function
 - Implement Spotify API Save Playlist to user acct function
 - Test and debug
