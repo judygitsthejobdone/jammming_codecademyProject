@@ -20,8 +20,9 @@ function App() {
       .then( res => setResults(res) )
   };
   const handleCreatePlaylist = (name) => {
-    createPlaylist(name).then(res => {
+    return createPlaylist(name).then(res => {
       res.ok ? console.log(`playlist "${name}" created.`) : console.log(`Could not save playlist "${name}". Response.ok=${res.ok} and Response.status=${res.status}`)
+      return res.json();
     })
   };
 
