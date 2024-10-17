@@ -4,6 +4,7 @@ import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
 import searchSpotify from './utils/SpotifyWebAPI';
+import { createPlaylist } from './utils/SpotifyWebAPI';
 import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -17,6 +18,11 @@ function App() {
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
       .then( res => setResults(res) )
+  };
+  const handleCreatePlaylist = (name) => {
+    createPlaylist(name).then(res => {
+      res.ok ? console.log(`playlist "${name}" created.`) : console.log(`Could not save playlist "${name}". Response.ok=${res.ok} and Response.status=${res.status}`)
+    })
   };
 
   return (
@@ -34,7 +40,7 @@ function App() {
       <Container fluid>
         <Row xs={1} md={2} >
           <Col className="bg-dark pb-3" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
-          <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} /></Col>
+          <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} createPlaylist={handleCreatePlaylist} /></Col>
         </Row>
       </Container>
       

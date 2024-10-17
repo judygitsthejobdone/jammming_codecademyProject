@@ -377,6 +377,198 @@ const exampleResponse = {
 
 
 
-searchSpotify();
+//searchSpotify();
+async function createPlaylist(name) {
+  const user_id = "example_id";
+  const endpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
+  const body = {
+    "name": name, //required
+    "description": "New playlist description",
+    "public": false,
+    "collaborative": false,
+  };
 
+  return {
+    status: 201,
+    ok: true,
+    json: async () => examplePlaylist,
+  };
+}
+async function renamePlaylist(newName, playlist_id) {
+  console.log()
+}
+async function createPlaylist401(name) {
+  return {
+    "error": {
+      "status": 401,
+      "message": "Bad or expired token. This can happen if the user revoked a token or the access token has expired. You should re-authenticate the user."
+    }
+  }
+};
+async function createPlaylist403(name) {
+  return {
+    "error": {
+      "status": 403,
+      "message": "Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately, re-authenticating the user won't help here."
+    }
+  }
+}
+async function createPlaylist429(name) {
+  return {
+    "error": {
+      "status": 429,
+      "message": "The app has exceeded its rate limits."
+    }
+  }
+}
+const examplePlaylist = {
+  "collaborative": false,
+  "description": "string",
+  "external_urls": {
+    "spotify": "string"
+  },
+  "followers": {
+    "href": "string",
+    "total": 0
+  },
+  "href": "string",
+  "id": "string",
+  "images": [
+    {
+      "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+      "height": 300,
+      "width": 300
+    }
+  ],
+  "name": "Example Playlist Name",
+  "owner": {
+    "external_urls": {
+      "spotify": "string"
+    },
+    "followers": {
+      "href": "string",
+      "total": 0
+    },
+    "href": "string",
+    "id": "string",
+    "type": "user",
+    "uri": "string",
+    "display_name": "string"
+  },
+  "public": false,
+  "snapshot_id": "string",
+  "tracks": {
+    "href": "https://api.spotify.com/v1/me/shows?offset=0&limit=20",
+    "limit": 20,
+    "next": "https://api.spotify.com/v1/me/shows?offset=1&limit=1",
+    "offset": 0,
+    "previous": "https://api.spotify.com/v1/me/shows?offset=1&limit=1",
+    "total": 4,
+    "items": [
+      {
+        "added_at": "string",
+        "added_by": {
+          "external_urls": {
+            "spotify": "string"
+          },
+          "followers": {
+            "href": "string",
+            "total": 0
+          },
+          "href": "string",
+          "id": "string",
+          "type": "user",
+          "uri": "string"
+        },
+        "is_local": false,
+        "track": {
+          "album": {
+            "album_type": "compilation",
+            "total_tracks": 9,
+            "available_markets": [
+              "CA",
+              "BR",
+              "IT"
+            ],
+            "external_urls": {
+              "spotify": "string"
+            },
+            "href": "string",
+            "id": "2up3OPMp9Tb4dAKM2erWXQ",
+            "images": [
+              {
+                "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                "height": 300,
+                "width": 300
+              }
+            ],
+            "name": "string",
+            "release_date": "1981-12",
+            "release_date_precision": "year",
+            "restrictions": {
+              "reason": "market"
+            },
+            "type": "album",
+            "uri": "spotify:album:2up3OPMp9Tb4dAKM2erWXQ",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "string"
+                },
+                "href": "string",
+                "id": "string",
+                "name": "string",
+                "type": "artist",
+                "uri": "string"
+              }
+            ]
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "string"
+              },
+              "href": "string",
+              "id": "string",
+              "name": "string",
+              "type": "artist",
+              "uri": "string"
+            }
+          ],
+          "available_markets": [
+            "string"
+          ],
+          "disc_number": 0,
+          "duration_ms": 0,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "string",
+            "ean": "string",
+            "upc": "string"
+          },
+          "external_urls": {
+            "spotify": "string"
+          },
+          "href": "string",
+          "id": "string",
+          "is_playable": false,
+          "linked_from": {},
+          "restrictions": {
+            "reason": "string"
+          },
+          "name": "string",
+          "popularity": 0,
+          "preview_url": "string",
+          "track_number": 0,
+          "type": "track",
+          "uri": "string",
+          "is_local": false
+        }
+      }
+    ]
+  },
+  "type": "string",
+  "uri": "example_playlist_uri"
+};
 export default searchSpotify;
+export {createPlaylist};
