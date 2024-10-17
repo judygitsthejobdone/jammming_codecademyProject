@@ -16,9 +16,8 @@ function Playlist({tracklist, setTracklist, createPlaylist}) {
         setPlaylistName(target.value);
     }
     function removeTrack({target}) {
-        setTracklist(tracklist.filter(index => index !== target.value))
-        console.log(`Trying to remove playlist index ${target.value} from the tracklist.`)
-        //Need to bug fix, the filter method is not properly removing tracks
+        setTracklist(tracklist.filter((val, index) => index != target.value))
+        console.log(`Removed playlist index ${target.value} from the tracklist.`)
     }
     function handleSave() {
         //code to save playlist
