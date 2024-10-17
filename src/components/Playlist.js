@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Track from './Track';
 import { FormGroup, Button } from 'react-bootstrap';
 
-function Playlist({tracklist, setTracklist}) {
+function Playlist({tracklist, setTracklist, createPlaylist}) {
     const [playlistName, setPlaylistName] = useState('');
 
     function handleNameChange({target}) {
@@ -20,8 +20,17 @@ function Playlist({tracklist, setTracklist}) {
     }
     function handleSave() {
         //code to save playlist
+        const playlistExists = false;
+        if(playlistExists) {
+          //code to update existing playlist
+        } else { 
+          //code to create new playlist
+          createPlaylist(playlistName);
+          //code to add tracklist to new playlist
+          
+        }
         //props.savePlaylist(playlistName, tracklist);
-        console.log(`saving playlist ${playlistName} to user's account...`);
+        //console.log(`saving playlist ${playlistName} to user's account...`);
     }
     return (
       <Form inline="true" onSubmit={event => event.preventDefault()} data-bs-theme="dark" className="pb-3">
