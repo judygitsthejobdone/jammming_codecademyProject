@@ -5,7 +5,14 @@ import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
 
 function Track({track, clickHandler, buttonLabel, index}) {
-  const handleClick = ({target}) => clickHandler(target.value);
+  const handleClick = ({currentTarget}) => clickHandler(currentTarget.value);
+  /**When using only target prop of onClick event, I had major issues where e.target.value would randomly be undefined. 
+   * This created issues in both adding and removing playlist contents.
+   * After several weeks of searching...
+   * changed from {target} to {currentTarget} per solution on https://github.com/facebook/react/issues/4745 and solved all my issues. 
+   * No more random undefined.
+   * */
+
     return (
       <Container fluid>
       <Row sm={5} xs={3}>
