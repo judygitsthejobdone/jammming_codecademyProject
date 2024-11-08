@@ -2,11 +2,13 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import Track from "./Track";
 
-function SearchResults({results, setTracklist}) {
-  const addTrack = ({target}) => {
-    //code to addTrack to tracklist goes here
-    setTracklist(prev => [...prev])
-    console.log(`Trying to add result index ${target.value} to the tracklist.`)
+function SearchResults({results, tracklistChange}) {
+  const addTrack = (indexToAdd) => {
+   Number.isInteger(Number(indexToAdd)) && tracklistChange(prev => {
+     console.log(prev);
+      return [...prev, results[indexToAdd]]
+    });
+    console.log(`Trying to add result index ${indexToAdd} to the tracklist.`);
   }
 
   if(!results) {
@@ -17,9 +19,10 @@ function SearchResults({results, setTracklist}) {
 
   return (
     <ListGroup variant='flush'>
-      {results.map( (result, index) => <ListGroup.Item key={index} ><Track track={result} key={index} index={index} handleClick={addTrack} buttonLabel="+" /></ListGroup.Item> )}
+      {results.map( (result, index) => result && <ListGroup.Item key={index} ><Track track={result} key={index} index={index} clickHandler={addTrack} buttonLabel="+" /></ListGroup.Item> )} 
     </ListGroup>
   );
+  //the "result &&" was necessary to prevent site crash when result was undefined.
 };
   
   export default SearchResults;

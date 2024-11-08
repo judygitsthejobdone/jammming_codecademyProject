@@ -1,5 +1,5 @@
 //import './Playlist.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -8,16 +8,19 @@ import Col from 'react-bootstrap/Col';
 import Track from './Track';
 import { FormGroup, Button } from 'react-bootstrap';
 
-function Playlist({tracklist, setTracklist, createPlaylist}) {
+function Playlist({tracklist, tracklistChange, createPlaylist}) {
     const [playlistName, setPlaylistName] = useState('');
     const [currentPlaylist, setCurrentPlaylist] = useState(null);
+    
+    useEffect(()=> {},[tracklist]);
 
     function handleNameChange({target}) {
-        setPlaylistName(target.value);
+        setPlaylistName(() => target.value);
     }
-    function removeTrack({target}) {
-        setTracklist(tracklist.filter((val, index) => index != target.value))
-        console.log(`Removed playlist index ${target.value} from the tracklist.`)
+    function removeTrack(indexToRemove) {
+        tracklistChange(tracklist.filter((val, index) => index != indexToRemove));
+        console.log(`Removed playlist index ${indexToRemove} from the tracklist.`);
+        console.log(tracklist)
     }
     function handleSave() {
         //code to save playlist
@@ -29,7 +32,7 @@ function Playlist({tracklist, setTracklist, createPlaylist}) {
         } else { 
           //code to create new playlist and set current Playlist
           createPlaylist(playlistName)
-            .then((playlist) => setCurrentPlaylist(playlist));
+            .then((playlist) => setCurrentPlaylist(() => playlist));
           //code to add tracklist to new playlist
           
         }
@@ -47,7 +50,7 @@ function Playlist({tracklist, setTracklist, createPlaylist}) {
           </Col>
         </Row></FormGroup></Container>
         <ListGroup variant='flush'>
-        {tracklist.map( ( track, index ) => <ListGroup.Item key={index} ><Track track={track} key={index} index={index} handleClick={removeTrack} buttonLabel="-" /></ListGroup.Item> ) }
+        {tracklist.map( ( track, index ) => track && <ListGroup.Item key={index} ><Track track={track} key={index} index={index} clickHandler={removeTrack} buttonLabel="-" /></ListGroup.Item> ) }
         </ListGroup>
         <br />
         <Button type='button' variant="dark" onClick={handleSave}>Save to Spotify</Button>

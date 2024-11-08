@@ -12,12 +12,12 @@ import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
 function App() {
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
   const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
   
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
-      .then( res => setResults(res) )
+      .then( res => setResults(() => res) )
   };
   const handleCreatePlaylist = (name) => {
     return createPlaylist(name).then(res => {
@@ -25,6 +25,7 @@ function App() {
       return res.json();
     })
   };
+  //const handleTracklistChange = (newval) => setTracklist(newval);
 
   return (
     <div className="App">
@@ -40,8 +41,8 @@ function App() {
       <Navbar sticky="top" data-bs-theme="light" className="bg-dark justify-content-around" ><SearchBar handleSearch={handleSearch} /></Navbar>
       <Container fluid>
         <Row xs={1} md={2} >
-          <Col className="bg-dark pb-3" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
-          <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} createPlaylist={handleCreatePlaylist} /></Col>
+          <Col className="bg-dark pb-3" ><SearchResults results={results} tracklistChange={setTracklist}/></Col>
+          <Col className="bg-secondary" ><Playlist tracklist={tracklist} tracklistChange={setTracklist} createPlaylist={handleCreatePlaylist} /></Col>
         </Row>
       </Container>
       
