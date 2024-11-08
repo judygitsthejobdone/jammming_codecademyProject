@@ -27,7 +27,7 @@ function processResponse(response) {
 
         resultsArray.push(obj)
     });
-    console.log(JSON.stringify(resultsArray));
+    //console.log(JSON.stringify(resultsArray));
     return resultsArray
 }
 

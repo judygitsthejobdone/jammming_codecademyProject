@@ -12,7 +12,7 @@ function Playlist({tracklist, tracklistChange, createPlaylist}) {
     const [playlistName, setPlaylistName] = useState('');
     const [currentPlaylist, setCurrentPlaylist] = useState(null);
     
-    useEffect(()=> {},[tracklist]);
+    //useEffect(()=> {},[tracklist]);
 
     function handleNameChange({target}) {
         setPlaylistName(() => target.value);
