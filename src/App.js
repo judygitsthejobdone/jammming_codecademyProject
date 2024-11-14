@@ -14,6 +14,7 @@ import { useState } from 'react';
 function App() {
   const [results, setResults] = useState([]);
   const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
+  const tracklistURIs = tracklist.map(track => track.uri);
   
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
