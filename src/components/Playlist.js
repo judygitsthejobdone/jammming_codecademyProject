@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Track from './Track';
 import { FormGroup, Button } from 'react-bootstrap';
 
-function Playlist({tracklist, tracklistChange, createPlaylist}) {
+function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistItems}) {
     const [playlistName, setPlaylistName] = useState('');
     const [currentPlaylist, setCurrentPlaylist] = useState(null);
     
@@ -22,21 +22,26 @@ function Playlist({tracklist, tracklistChange, createPlaylist}) {
         console.log(`Removed playlist index ${indexToRemove} from the tracklist.`);
         console.log(tracklist)
     }
-    function handleSave() {
+    function handleSave() {     
         //code to save playlist
+        const tracklistURIs = tracklist.map(track => track.uri);
         const playlistExists = currentPlaylist;
+        if(!playlistName){return alert('Please provide a name for the playlist.')};
+
         if(playlistExists) {
           //code to update existing playlist
           console.log('executing code to update playlist: '+currentPlaylist.name);
           //console.log(JSON.stringify(currentPlaylist));
+          // if name is not same as current playlist, option to renamePlaylist or createNew
+          // https://developer.spotify.com/documentation/web-api/reference/change-playlist-details
         } else { 
           //code to create new playlist and set current Playlist
           createPlaylist(playlistName)
-            .then((playlist) => setCurrentPlaylist(() => playlist));
-          //code to add tracklist to new playlist
-          
-        }
-        //props.savePlaylist(playlistName, tracklist);
+            .then( (playlist) => {
+              setCurrentPlaylist(() => playlist);
+              updatePlaylistItems(playlist.id, tracklistURIs);
+            })
+        }        
         //console.log(`saving playlist ${playlistName} to user's account...`);
     }
     return (

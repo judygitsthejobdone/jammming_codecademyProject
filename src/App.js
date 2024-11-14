@@ -3,8 +3,7 @@ import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
-import searchSpotify from './utils/SpotifyWebAPI';
-import { createPlaylist } from './utils/SpotifyWebAPI';
+import { default as searchSpotify, createPlaylist, updatePlaylistItems } from './utils/SpotifyWebAPI';
 import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,7 +13,6 @@ import { useState } from 'react';
 function App() {
   const [results, setResults] = useState([]);
   const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
-  const tracklistURIs = tracklist.map(track => track.uri);
   
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
@@ -26,7 +24,12 @@ function App() {
       return res.json();
     })
   };
-  //const handleTracklistChange = (newval) => setTracklist(newval);
+  const handleUpdatePlaylistItems = (playlist_id, tracklistURIs) => {
+    return updatePlaylistItems(playlist_id, tracklistURIs).then(res => {
+      res.ok ? console.log('good msg') : console.log('bad msg')
+      return res.json();
+    })
+  };
 
   return (
     <div className="App">
@@ -43,7 +46,12 @@ function App() {
       <Container fluid>
         <Row xs={1} md={2} >
           <Col className="bg-dark pb-3" ><SearchResults results={results} tracklistChange={setTracklist}/></Col>
-          <Col className="bg-secondary" ><Playlist tracklist={tracklist} tracklistChange={setTracklist} createPlaylist={handleCreatePlaylist} /></Col>
+          <Col className="bg-secondary" ><Playlist 
+            tracklist={tracklist} 
+            tracklistChange={setTracklist} 
+            createPlaylist={handleCreatePlaylist} 
+            updatePlaylistItems={handleUpdatePlaylistItems}
+            /></Col>
         </Row>
       </Container>
       
@@ -54,17 +62,6 @@ function App() {
 }
 
 export default App;
-
-/**- Create static components
-    - App
-    - SearchBar
-        - Search button
-    - SearchResults
-    - Playlist
-    - Tracklist
-    - Track
-    - Save to Spotify button
-     */
 
     const mockTrack = {
       "track":"Get High",

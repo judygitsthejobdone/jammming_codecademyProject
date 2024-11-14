@@ -341,7 +341,7 @@ const exampleResponse = {
       "total": 167
     }
   };
-  const examplePlaylist = {
+const examplePlaylist = {
     "collaborative": false,
     "description": "string",
     "external_urls": {

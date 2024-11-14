@@ -54,6 +54,25 @@ async function createPlaylist(name) {
 async function renamePlaylist(newName, playlist_id) {
   console.log()
 }
+
+async function updatePlaylistItems(playlist_id, tracklistURIs) {
+  // https://developer.spotify.com/documentation/web-api/reference/reorder-or-replace-playlists-tracks
+  // To replace items, include uris as either a query parameter or in the request's body. 
+  // Replacing items in a playlist will overwrite its existing items. 
+  // This operation can be used for replacing or clearing items in a playlist.
+
+  const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
+  const body = {
+    "uris": tracklistURIs,
+  };
+
+  return {
+    status: 200,
+    ok: true,
+    json: async () => 'abc', // i'm unsure if this should return an object with key snapshot_id and string value or if it should just return the string. The documentation is unclear.
+  };
+};
+
 async function createPlaylist401(name) {
   return {
     "error": {
@@ -80,4 +99,4 @@ async function createPlaylist429(name) {
 }
 
 export default searchSpotify;
-export {createPlaylist};
+export {createPlaylist, updatePlaylistItems};
