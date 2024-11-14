@@ -3,7 +3,7 @@ import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
-import { default as searchSpotify, createPlaylist, updatePlaylistItems } from './utils/SpotifyWebAPI';
+import { default as searchSpotify, createPlaylist, updatePlaylistItems, renamePlaylist } from './utils/SpotifyWebAPI';
 import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -24,9 +24,15 @@ function App() {
       return res.json();
     })
   };
+  const handleRenamePlaylist = (playlist_id, newName) => {
+    return renamePlaylist(playlist_id, newName).then(res => {
+      res.ok ? console.log(`playlist renamed to ${newName}.`) : console.log(`Could not rename playlist id "${playlist_id}". Response.ok=${res.ok} and Response.status=${res.status}`)
+      return res.json();
+    })
+  };
   const handleUpdatePlaylistItems = (playlist_id, tracklistURIs) => {
     return updatePlaylistItems(playlist_id, tracklistURIs).then(res => {
-      res.ok ? console.log('good msg') : console.log('bad msg')
+      res.ok ? console.log('Playlist updated.') : console.log('Playlist update failed.  Response.ok=${res.ok} and Response.status=${res.status}')
       return res.json();
     })
   };
@@ -51,6 +57,7 @@ function App() {
             tracklistChange={setTracklist} 
             createPlaylist={handleCreatePlaylist} 
             updatePlaylistItems={handleUpdatePlaylistItems}
+            renamePlaylist={handleRenamePlaylist}
             /></Col>
         </Row>
       </Container>

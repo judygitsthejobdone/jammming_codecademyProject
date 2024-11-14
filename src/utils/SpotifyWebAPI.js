@@ -33,8 +33,6 @@ function processResponse(response) {
     return resultsArray
 }
 
-
-//searchSpotify();
 async function createPlaylist(name) {
   const user_id = "example_id";
   const endpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
@@ -51,8 +49,18 @@ async function createPlaylist(name) {
     json: async () => examplePlaylist,
   };
 }
-async function renamePlaylist(newName, playlist_id) {
-  console.log()
+async function renamePlaylist(playlist_id, newName) {
+  // https://developer.spotify.com/documentation/web-api/reference/change-playlist-details
+  const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}`;
+  const body = {
+    "name": newName,
+  };
+
+  return {
+    status: 201,
+    ok: true,
+    json: async () => 'Playlist updated',
+  };
 }
 
 async function updatePlaylistItems(playlist_id, tracklistURIs) {
@@ -99,4 +107,4 @@ async function createPlaylist429(name) {
 }
 
 export default searchSpotify;
-export {createPlaylist, updatePlaylistItems};
+export {createPlaylist, updatePlaylistItems, renamePlaylist};

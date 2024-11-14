@@ -1,18 +1,31 @@
 //import './Playlist.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Track from './Track';
-import { FormGroup, Button } from 'react-bootstrap';
+import { FormGroup, Button, Modal } from 'react-bootstrap';
 
-function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistItems}) {
+function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistItems, renamePlaylist }) {
     const [playlistName, setPlaylistName] = useState('');
     const [currentPlaylist, setCurrentPlaylist] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const tracklistURIs = tracklist.map(track => track.uri);
     
-    //useEffect(()=> {},[tracklist]);
+    const handleClose = () => setShowModal(false);
+    const handleRenamePlaylist = () => {
+      console.log('executing code to update playlist: '+currentPlaylist.name);
+      renamePlaylist(currentPlaylist.id, playlistName);
+    }
+    const handleCreatePlaylist = () => {
+      createPlaylist(playlistName)
+        .then( (playlist) => {
+          setCurrentPlaylist(() => playlist);
+          updatePlaylistItems(playlist.id, tracklistURIs);
+        });
+    }
 
     function handleNameChange({target}) {
         setPlaylistName(() => target.value);
@@ -24,23 +37,20 @@ function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistIte
     }
     function handleSave() {     
         //code to save playlist
-        const tracklistURIs = tracklist.map(track => track.uri);
         const playlistExists = currentPlaylist;
-        if(!playlistName){return alert('Please provide a name for the playlist.')};
+        if(!playlistName.length){return alert('Please provide a name for the playlist.')};
 
         if(playlistExists) {
           //code to update existing playlist
-          console.log('executing code to update playlist: '+currentPlaylist.name);
-          //console.log(JSON.stringify(currentPlaylist));
+          
           // if name is not same as current playlist, option to renamePlaylist or createNew
-          // https://developer.spotify.com/documentation/web-api/reference/change-playlist-details
+          if (playlistName != currentPlaylist.name) {
+            setShowModal(true)
+          } else {updatePlaylistItems(currentPlaylist.id, tracklistURIs)};
+
         } else { 
           //code to create new playlist and set current Playlist
-          createPlaylist(playlistName)
-            .then( (playlist) => {
-              setCurrentPlaylist(() => playlist);
-              updatePlaylistItems(playlist.id, tracklistURIs);
-            })
+          handleCreatePlaylist();
         }        
         //console.log(`saving playlist ${playlistName} to user's account...`);
     }
@@ -59,6 +69,27 @@ function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistIte
         </ListGroup>
         <br />
         <Button type='button' variant="dark" onClick={handleSave}>Save to Spotify</Button>
+        <Modal show={showModal} onHide={handleClose}>
+          
+          <Modal.Body>Would you like to Rename and Overwrite "{currentPlaylist && currentPlaylist.name}" or Create a New Playlist named "{playlistName}"?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => {
+              handleClose();
+              handleRenamePlaylist();
+              }}>
+              Rename and Overwrite
+            </Button>
+            <Button variant="primary" onClick={() => {
+              handleClose();
+              handleCreatePlaylist();
+              }}>
+              Create New Playlist
+            </Button>
+            <Button variant="tertiary" onClick={handleClose}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Form>
     );
 }
