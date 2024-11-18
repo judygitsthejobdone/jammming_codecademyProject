@@ -81,7 +81,7 @@ async function updatePlaylistItems(playlist_id, tracklistURIs) {
   };
 };
 
-async function createPlaylist401(name) {
+async function error401(name) {
   return {
     "error": {
       "status": 401,
@@ -89,7 +89,7 @@ async function createPlaylist401(name) {
     }
   }
 };
-async function createPlaylist403(name) {
+async function error403(name) {
   return {
     "error": {
       "status": 403,
@@ -97,7 +97,7 @@ async function createPlaylist403(name) {
     }
   }
 }
-async function createPlaylist429(name) {
+async function error429(name) {
   return {
     "error": {
       "status": 429,
