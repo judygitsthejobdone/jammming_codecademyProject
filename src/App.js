@@ -3,7 +3,7 @@ import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
-import searchSpotify from './utils/SpotifyWebAPI';
+import { default as searchSpotify, createPlaylist, updatePlaylistItems, renamePlaylist } from './utils/SpotifyWebAPI';
 import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,12 +11,30 @@ import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
 function App() {
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
   const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
   
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
-      .then( res => setResults(res) )
+      .then( res => setResults(() => res) )
+  };
+  const handleCreatePlaylist = (name) => {
+    return createPlaylist(name).then(res => {
+      res.ok ? console.log(`playlist "${name}" created.`) : console.log(`Could not save playlist "${name}". Response.ok=${res.ok} and Response.status=${res.status}`)
+      return res.json();
+    })
+  };
+  const handleRenamePlaylist = (playlist_id, newName) => {
+    return renamePlaylist(playlist_id, newName).then(res => {
+      res.ok ? console.log(`playlist renamed to ${newName}.`) : console.log(`Could not rename playlist id "${playlist_id}". Response.ok=${res.ok} and Response.status=${res.status}`)
+      return res.json();
+    })
+  };
+  const handleUpdatePlaylistItems = (playlist_id, tracklistURIs) => {
+    return updatePlaylistItems(playlist_id, tracklistURIs).then(res => {
+      res.ok ? console.log('Playlist updated.') : console.log('Playlist update failed.  Response.ok=${res.ok} and Response.status=${res.status}')
+      return res.json();
+    })
   };
 
   return (
@@ -33,8 +51,14 @@ function App() {
       <Navbar sticky="top" data-bs-theme="light" className="bg-dark justify-content-around" ><SearchBar handleSearch={handleSearch} /></Navbar>
       <Container fluid>
         <Row xs={1} md={2} >
-          <Col className="bg-dark pb-3" ><SearchResults results={results} setTracklist={setTracklist}/></Col>
-          <Col className="bg-secondary" ><Playlist tracklist={tracklist} setTracklist={setTracklist} /></Col>
+          <Col className="bg-dark pb-3" ><SearchResults results={results} tracklistChange={setTracklist}/></Col>
+          <Col className="bg-secondary" ><Playlist 
+            tracklist={tracklist} 
+            tracklistChange={setTracklist} 
+            createPlaylist={handleCreatePlaylist} 
+            updatePlaylistItems={handleUpdatePlaylistItems}
+            renamePlaylist={handleRenamePlaylist}
+            /></Col>
         </Row>
       </Container>
       
@@ -45,17 +69,6 @@ function App() {
 }
 
 export default App;
-
-/**- Create static components
-    - App
-    - SearchBar
-        - Search button
-    - SearchResults
-    - Playlist
-    - Tracklist
-    - Track
-    - Save to Spotify button
-     */
 
     const mockTrack = {
       "track":"Get High",
