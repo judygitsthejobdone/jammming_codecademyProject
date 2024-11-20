@@ -116,4 +116,4 @@ async function error429(name) {
 }
 
 export default searchSpotify;
-export {createPlaylist, updatePlaylistItems, renamePlaylist};
+export {createPlaylist, updatePlaylistItems, renamePlaylist, getUserData};
