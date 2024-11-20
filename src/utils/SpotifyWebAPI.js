@@ -1,5 +1,14 @@
 import {examplePlaylist, exampleResponse} from './ExampleContent.js';
 
+async function getUserData() {
+  const response = await fetch("https://api.spotify.com/v1/me", {
+    method: 'GET',
+    headers: { 'Authorization': 'Bearer ' + window.localStorage.access_token },
+  });
+
+  return await response.json();
+}
+
 async function searchSpotify(q,type) {
     /**The code below takes the response and formats it into an array of result objects 
      * To use a real response, replace "exampleResponse" with the actual response.
