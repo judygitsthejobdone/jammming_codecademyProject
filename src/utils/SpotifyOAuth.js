@@ -27,8 +27,8 @@ const redirectToSpotifyAuthorize = async () => {
     const codeChallenge = base64encode(hashed);
 
     // Request User Authorization
-    const scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private'; // TODO update scope
-    const authUrl = new URL("https://accounts.spotify.com/authorize")
+    const scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private';
+    const authUrl = new URL("https://accounts.spotify.com/authorize");
 
     window.localStorage.setItem('code_verifier', codeVerifier);
 
@@ -77,8 +77,8 @@ const checkForAuthCode = async () => {
 const getToken = async code => {
 
     // stored in the previous step
-    let codeVerifier = localStorage.getItem('code_verifier');
-    const url = window.location.href;
+    let code_verifier = localStorage.getItem('code_verifier');
+    const token_endpoint = new URL('https://accounts.spotify.com/api/token');
     const payload = {
       method: 'POST',
       headers: {
@@ -89,11 +89,11 @@ const getToken = async code => {
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirectUri,
-        code_verifier: codeVerifier,
+        code_verifier: code_verifier,
       }),
     }
   
-    const body = await fetch(url, payload);
+    const body = await fetch(token_endpoint, payload);
     const response = await body.json();
   
     localStorage.setItem('access_token', response.access_token);

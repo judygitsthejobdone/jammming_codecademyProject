@@ -4,18 +4,18 @@ import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
 import { default as searchSpotify, createPlaylist, updatePlaylistItems, renamePlaylist, getUserData } from './utils/SpotifyWebAPI';
-import { Navbar, NavbarBrand} from 'react-bootstrap';
+import { checkForAuthCode, redirectToSpotifyAuthorize } from './utils/SpotifyOAuth';import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useEffect, useState } from 'react';
-import { checkForAuthCode, redirectToSpotifyAuthorize } from './utils/SpotifyOAuth';
+
 
 function App() {
   const [results, setResults] = useState([]);
   const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
   
   useEffect( () => {
     const checkLoginStatus = async () => {
@@ -34,8 +34,8 @@ function App() {
   }, [])
   
   const handleLogout = () => {
-    localStorage.clear();
-    setUserInfo(null);
+    localStorage.removeItem('acccess_token');
+    setLoggedIn(false);
   };
   const handleSearch = (q, type) => { 
     searchSpotify(q, type)
