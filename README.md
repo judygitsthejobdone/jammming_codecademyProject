@@ -46,9 +46,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
 - Implement styling api
+- Implement save playlist to user acct (mock)
+  <!--fyi the mock save does not change the name of current playlist object/state. Stuck at "Example Playlist Name". This is a non-blocking error.-->
 
 ## In Progress
-- Implement save playlist to user acct (mock)
 - Implement Playlist renaming
 - Implement Adding Songs to custom playlist
 - Implement Removing Songs from custom playlist
