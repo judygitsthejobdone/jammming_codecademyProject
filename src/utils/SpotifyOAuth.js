@@ -95,11 +95,11 @@ const getToken = async code => {
   
     const body = await fetch(token_endpoint, payload);
     const response = await body.json();
-  
-    localStorage.setItem('access_token', response.access_token);
-    localStorage.setItem('expires_in', response.expires_in);
-    localStorage.setItem('refresh_token', response.refresh_token);
-    
+    if (body.ok) {
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('expires_in', response.expires_in);
+        localStorage.setItem('refresh_token', response.refresh_token);
+    }
     return response;
   }
 
@@ -126,7 +126,7 @@ const getRefreshToken = async () => {
 
     localStorage.setItem('access_token', response.accessToken);
     if (response.refreshToken) {
-    localStorage.setItem('refresh_token', response.refreshToken);
+        localStorage.setItem('refresh_token', response.refreshToken);
     }
     // If everything goes well, you'll receive a 200 OK response which is very similar to the response when issuing an access token
     // When a refresh token is not returned, continue using the existing token.
