@@ -31,7 +31,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - React
 - HTTP Requests and Responses
 - Spotify API
-- Authentication
+- OAuth 2.0
 
 ## Features Implemented
 - Static SearchBar and SearchResults (replaces requested "Tracklist") components
@@ -40,16 +40,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - mock API
 - Track Listing in The Component Tree
 - unidirectional dataflow 
-- Implement Playlists in The Component Tree
+- Playlists in The Component Tree
     - Static Playlist Component
     - Name/Rename input
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
-- Implement styling api
-- Implement save playlist to user acct (mock)
+- Styling api
+- Save playlist to user acct (mock)
   <!--fyi the mock save does not change the name of current playlist object/state. Stuck at "Example Playlist Name". This is a non-blocking error.-->
+- Spotify API Search function
 
 ## In Progress
+- Implement Spotify API Save Playlist to user acct function
+  <!-- next steps: add code to createPlaylist(name) function in SpotifyWebAPI.js-->
 - Implement Playlist renaming
   - mock complete
 - Implement Adding Songs to custom playlist
@@ -58,8 +61,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - mock complete
 
 ## Future Work
-- Implement Spotify API Search function
-- Implement Spotify API Save Playlist to user acct function
 - Test and debug
 - Review Project
 - Deploy on gh-pages
