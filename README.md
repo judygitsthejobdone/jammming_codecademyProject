@@ -51,8 +51,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## In Progress
 - Implement Playlist renaming
+  - mock complete
 - Implement Adding Songs to custom playlist
+  - mock complete
 - Implement Removing Songs from custom playlist
+  - mock complete
 
 ## Future Work
 - Implement Spotify API Search function

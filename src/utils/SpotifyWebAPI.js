@@ -1,20 +1,40 @@
 import {examplePlaylist, exampleResponse} from './ExampleContent.js';
+const access_token = localStorage.getItem('access_token');
 
 async function getUserData() {
   const response = await fetch("https://api.spotify.com/v1/me", {
     method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + window.localStorage.access_token },
+    headers: { 'Authorization': 'Bearer ' + access_token },
   });
 
   return await response.json();
 }
 
 async function searchSpotify(q,type) {
-    /**The code below takes the response and formats it into an array of result objects 
-     * To use a real response, replace "exampleResponse" with the actual response.
+    /** The code below takes the response and formats it into an array of result objects 
     */
-    await exampleResponse;
-    return processResponse(exampleResponse);
+    const endpoint = new URL('https://api.spotify.com/v1/search');
+    const params = {
+      q: q,
+      limit: 15,
+    }
+    if (type) {
+      params.type = type;
+    }
+    endpoint.search = new URLSearchParams(params).toString();
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + access_token },
+    });
+    
+    const res = await response.json();
+    console.log(res);
+    if (!res.error) {
+      return processResponse(response);
+    } else {
+      console.log(res)
+      return [];
+    }
 }
 
 function processResponse(response) {
@@ -51,7 +71,7 @@ async function createPlaylist(name) {
     "public": false,
     "collaborative": false,
   };
-
+  console.log(JSON.stringify(body));
   return {
     status: 201,
     ok: true,
@@ -64,7 +84,7 @@ async function renamePlaylist(playlist_id, newName) {
   const body = {
     "name": newName,
   };
-
+  console.log(JSON.stringify(body));
   return {
     status: 201,
     ok: true,
