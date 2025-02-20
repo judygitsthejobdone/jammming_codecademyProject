@@ -26,13 +26,10 @@ async function searchSpotify(q,type) {
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + access_token },
     });
-    
-    const res = await response.json();
-    console.log(res);
-    if (!res.error) {
-      return processResponse(response);
+    if (response.ok) {
+      const res = await response.json();
+      return processResponse(res);
     } else {
-      console.log(res)
       return [];
     }
 }
