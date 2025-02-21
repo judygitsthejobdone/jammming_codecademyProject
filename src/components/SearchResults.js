@@ -8,7 +8,7 @@ function SearchResults({results, tracklistChange}) {
      console.log(prev);
       return [...prev, results[indexToAdd]]
     });
-    console.log(`Trying to add result index ${indexToAdd} to the tracklist.`);
+    //console.log(`Trying to add result index ${indexToAdd} to the tracklist.`);
   }
 
   if(!results) {

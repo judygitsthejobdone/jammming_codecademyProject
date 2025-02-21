@@ -46,22 +46,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
 - Styling api
-- Save playlist to user acct (mock)
+- Spotify API 
+  - Save playlist to user acct
   <!--fyi the mock save does not change the name of current playlist object/state. Stuck at "Example Playlist Name". This is a non-blocking error.-->
-- Spotify API Search function
+  - Search function
+  - Add/delete songs from playlist (for playlists created by the app)
 
 ## In Progress
-- Implement Spotify API Save Playlist to user acct function
-  <!-- next steps: add code to createPlaylist(name) function in SpotifyWebAPI.js-->
 - Implement Playlist renaming
   - mock complete
-- Implement Adding Songs to custom playlist
-  - mock complete
-- Implement Removing Songs from custom playlist
-  - mock complete
+    <!-- next steps: add code to renamePlaylist function in SpotifyWebAPI.js-->
 
 ## Future Work
 - Test and debug
+  - Bug #001 [#SOLVED]: logged in at open but getting "access token expired" msg. Error causes no visible effect. Need a try/catch or something to run refreshToken before trying again and some kind of report on the error alert on-screen so the user isn't just dumbfounded.
 - Review Project
 - Deploy on gh-pages
 - Refactor to allow non-track results

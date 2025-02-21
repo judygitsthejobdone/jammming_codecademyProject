@@ -4,7 +4,7 @@ import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
 import { default as searchSpotify, createPlaylist, updatePlaylistItems, renamePlaylist, getUserData } from './utils/SpotifyWebAPI';
-import { checkForAuthCode, redirectToSpotifyAuthorize } from './utils/SpotifyOAuth';import { Navbar, NavbarBrand} from 'react-bootstrap';
+import { checkForAuthCode, redirectToSpotifyAuthorize, checkToken} from './utils/SpotifyOAuth';import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,16 +13,19 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [results, setResults] = useState([]);
-  const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
+  const [tracklist, setTracklist] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   
   useEffect( () => {
     const checkLoginStatus = async () => {
+      await checkToken();
       const hasAuthCode = await checkForAuthCode();
-      console.log(hasAuthCode);
       if(!hasAuthCode) {
-        console.log('Error verifying token.')
+        setLoggedIn(false);
+        setUserInfo({});
+        //alert('Authentication error, please try refreshing the page or logging in again.');
+        console.log('Error verifying token.');
       } else {
         setLoggedIn(true);
         const userData = await getUserData();
@@ -42,7 +45,7 @@ function App() {
       .then( res => setResults(() => res) )
   };
   const handleCreatePlaylist = (name) => {
-    return createPlaylist(name).then(res => {
+    return createPlaylist(name, userInfo.id).then(res => {
       res.ok ? console.log(`playlist "${name}" created.`) : console.log(`Could not save playlist "${name}". Response.ok=${res.ok} and Response.status=${res.status}`)
       return res.json();
     })
@@ -94,13 +97,4 @@ function App() {
 }
 
 export default App;
-
-    const mockTrack = {
-      "track":"Get High",
-      "album":"Side Effects EP",
-      "artist":"Chris Travis",
-      "src":"https://i.scdn.co/image/ab67616d00004851ffa4064cb0e135b5e1ca41a2",
-      "altText":"Side Effects EP album art",
-      "uri":"spotify:track:2HEoWCdoCM6JfTaEGGgxXX"
-  }
   

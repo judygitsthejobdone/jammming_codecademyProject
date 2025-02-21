@@ -490,5 +490,12 @@ const examplePlaylist = {
     "type": "string",
     "uri": "example_playlist_uri"
   };
-
+/*const mockTrack = {
+  "track":"Get High",
+  "album":"Side Effects EP",
+  "artist":"Chris Travis",
+  "src":"https://i.scdn.co/image/ab67616d00004851ffa4064cb0e135b5e1ca41a2",
+  "altText":"Side Effects EP album art",
+  "uri":"spotify:track:2HEoWCdoCM6JfTaEGGgxXX"
+}*/
 export {exampleResponse, examplePlaylist};

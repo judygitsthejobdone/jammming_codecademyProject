@@ -66,7 +66,8 @@ const checkForAuthCode = async () => {
         const updatedUrl = url.search ? url.href : url.href.replace('?', '');
         window.history.replaceState({}, '', updatedUrl);
         
-    } else {console.log(`no code in response, error: ${urlParams.get('error')}`)}
+    } else if (urlParams.get('error')) {console.log(`no code in response, error: ${urlParams.get('error')}`)}
+
     if (!localStorage.getItem('access_token')) { 
         return false
      } else {return true};
@@ -97,6 +98,7 @@ const getToken = async code => {
     const response = await body.json();
     if (body.ok) {
         localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('last_refresh', Date.now())
         localStorage.setItem('expires_in', response.expires_in);
         localStorage.setItem('refresh_token', response.refresh_token);
     }
@@ -104,7 +106,7 @@ const getToken = async code => {
   }
 
 // Refreshing Tokens
-const getRefreshToken = async () => {
+const refreshToken = async () => {
 
     // refresh token that has been previously stored
     const refreshToken = localStorage.getItem('refresh_token');
@@ -122,16 +124,28 @@ const getRefreshToken = async () => {
     }),
     }
     const body = await fetch(url, payload);
-    const response = await body.json();
+    if (body.ok){
+        const response = await body.json();
+ 
+        localStorage.setItem('last_refresh', Date.now())
+        localStorage.setItem('access_token', response.accessToken);
+        localStorage.setItem('expires_in', response.expires_in);
+        if (response.refreshToken) {
+            localStorage.setItem('refresh_token', response.refreshToken);
+        }
+        // If everything goes well, you'll receive a 200 OK response which is very similar to the response when issuing an access token
+        // When a refresh token is not returned, continue using the existing token.
 
-    localStorage.setItem('access_token', response.accessToken);
-    if (response.refreshToken) {
-        localStorage.setItem('refresh_token', response.refreshToken);
-    }
-    // If everything goes well, you'll receive a 200 OK response which is very similar to the response when issuing an access token
-    // When a refresh token is not returned, continue using the existing token.
-
-    return response;
+        return response;
+    } else return false
 }
 
-export {checkForAuthCode, redirectToSpotifyAuthorize};
+const checkToken = async () => {
+    const now = Date.now();
+    const elapsed_time = (now - localStorage.getItem('last_refresh'))*10^-2;
+    if(elapsed_time + 60 >= localStorage.getItem('expires_in')) {
+        return await refreshToken(); 
+    }
+};
+
+export {checkForAuthCode, redirectToSpotifyAuthorize, checkToken};
