@@ -53,7 +53,7 @@ function App() {
   const handleRenamePlaylist = (playlist_id, newName) => {
     return renamePlaylist(playlist_id, newName).then(res => {
       res.ok ? console.log(`playlist renamed to ${newName}.`) : console.log(`Could not rename playlist id "${playlist_id}". Response.ok=${res.ok} and Response.status=${res.status}`)
-      return res.json();
+      //return res.json(); //The api to change playlist details returns an empty response body (result of json function) when successful and therefore no need to return it.
     })
   };
   const handleUpdatePlaylistItems = (playlist_id, tracklistURIs) => {

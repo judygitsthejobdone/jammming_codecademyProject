@@ -117,12 +117,14 @@ async function renamePlaylist(playlist_id, newName) {
   const body = {
     "name": newName,
   };
-  console.log(JSON.stringify(body));
-  return {
-    status: 201,
-    ok: true,
-    json: async () => 'Playlist updated',
-  };
+  console.log(`changing name to ${newName}...`)
+  console.log('Request body:', JSON.stringify(body));
+  const response = await fetch(endpoint, {
+    method: 'PUT',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    "body": JSON.stringify(body),
+  });
+  return response;
 }
 
 async function updatePlaylistItems(playlist_id, tracklistURIs) {

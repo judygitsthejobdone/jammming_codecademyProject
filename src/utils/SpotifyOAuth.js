@@ -70,7 +70,10 @@ const checkForAuthCode = async () => {
 
     if (!localStorage.getItem('access_token')) { 
         return false
-     } else {return true};
+     } else {
+        await checkToken();
+        return true
+    };
 }
 
 
@@ -98,7 +101,7 @@ const getToken = async code => {
     const response = await body.json();
     if (body.ok) {
         localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('last_refresh', Date.now())
+        localStorage.setItem('last_refresh', Date.now());
         localStorage.setItem('expires_in', response.expires_in);
         localStorage.setItem('refresh_token', response.refresh_token);
     }
@@ -112,6 +115,10 @@ const refreshToken = async () => {
     const refreshToken = localStorage.getItem('refresh_token');
     const url = "https://accounts.spotify.com/api/token";
 
+    // Defensive: log whether we have a refresh token stored
+    // (In production you might remove this or obfuscate the token.)
+    console.debug('Refreshing token, stored refresh_token present:', !!refreshToken);
+
     const payload = {
     method: 'POST',
     headers: {
@@ -124,27 +131,39 @@ const refreshToken = async () => {
     }),
     }
     const body = await fetch(url, payload);
+    const response = await body.json();
     if (body.ok){
-        const response = await body.json();
- 
+        
         localStorage.setItem('last_refresh', Date.now())
-        localStorage.setItem('access_token', response.accessToken);
-        localStorage.setItem('expires_in', response.expires_in);
-        if (response.refreshToken) {
-            localStorage.setItem('refresh_token', response.refreshToken);
+        response.access_token && localStorage.setItem('access_token', response.access_token);
+        response.expires_in && localStorage.setItem('expires_in', response.expires_in);
+        // When a refresh token is not returned, continue using the existing token.
+        if (response.refresh_token) {
+            localStorage.setItem('refresh_token', response.refresh_token);
         }
         // If everything goes well, you'll receive a 200 OK response which is very similar to the response when issuing an access token
-        // When a refresh token is not returned, continue using the existing token.
 
         return response;
-    } else return false
+    } else {
+        // Log the full response for debugging (error payload often contains reason)
+        console.error('Failed to refresh token:', response);
+        return response || false;
+    }
 }
 
 const checkToken = async () => {
     const now = Date.now();
-    const elapsed_time = (now - localStorage.getItem('last_refresh'))*10^-2;
-    if(elapsed_time + 60 >= localStorage.getItem('expires_in')) {
-        return await refreshToken(); 
+    const lastRefresh = localStorage.getItem('last_refresh');
+    const expiresIn = localStorage.getItem('expires_in');
+    // elapsed_time in seconds
+    const elapsed_time = (now - lastRefresh) / 1000;
+
+    console.debug('checkToken', { now, lastRefresh, expiresIn, elapsed_time });
+
+    // If token is close to expiry (within 60 seconds), refresh it.
+    if(elapsed_time + 60 >= expiresIn) {
+        await refreshToken();
+        return;
     }
 };
 

@@ -48,7 +48,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Styling api
 - Spotify API 
   - Save playlist to user acct
-  <!--fyi the mock save does not change the name of current playlist object/state. Stuck at "Example Playlist Name". This is a non-blocking error.-->
   - Search function
   - Add/delete songs from playlist (for playlists created by the app)
 
