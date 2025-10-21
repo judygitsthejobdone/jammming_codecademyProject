@@ -31,7 +31,7 @@ function SearchBar({handleSearch}) {
     function handleSearchType(event) {
         event.preventDefault();
         const {target} = event;
-        console.log(target.value)
+        //console.log(target.value)
         setSearchType(target.value);
     };
 

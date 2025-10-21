@@ -46,19 +46,29 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
 - Styling api
-- Spotify API 
+- Spotify API
   - Save playlist to user acct
   - Search function
   - Add/delete songs from playlist (for playlists created by the app)
+  - Rename playlist (for the current playlist created by the app)
 
 ## In Progress
-- Implement Playlist renaming
-  - mock complete
-    <!-- next steps: add code to renamePlaylist function in SpotifyWebAPI.js-->
+- Bug fixing
+- 
 
 ## Future Work
 - Test and debug
   - Bug #001 [#SOLVED]: logged in at open but getting "access token expired" msg. Error causes no visible effect. Need a try/catch or something to run refreshToken before trying again and some kind of report on the error alert on-screen so the user isn't just dumbfounded.
+  - Bug #002: RefreshToken api is not functioning
+  - Bug #003: Uncaught runtime error when searching by artist or album.
+    <!--SpotifyWebAPI.js:72 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'items')
+      at processResponse (SpotifyWebAPI.js:72:1)
+      at searchSpotify (SpotifyWebAPI.js:64:1)
+      processResponse	@	SpotifyWebAPI.js:72
+      searchSpotify	@	SpotifyWebAPI.js:64
+      await in searchSpotify		
+      handleSearch	@	App.js:44
+      handleSubmit	@	SearchBar.js:19 -->
 - Review Project
 - Deploy on gh-pages
 - Refactor to allow non-track results
