@@ -142,7 +142,7 @@ const refreshToken = async () => {
             localStorage.setItem('refresh_token', response.refresh_token);
         }
         // If everything goes well, you'll receive a 200 OK response which is very similar to the response when issuing an access token
-
+        console.debug('Token refreshed successfully',response);
         return response;
     } else {
         // Log the full response for debugging (error payload often contains reason)

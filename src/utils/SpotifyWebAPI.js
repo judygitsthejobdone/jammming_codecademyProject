@@ -50,10 +50,9 @@ async function searchSpotify(q,type) {
     const params = {
       q: q,
       limit: 15,
-    }
-    if (type) {
-      params.type = type;
-    }
+      type: type,
+    };
+    
     endpoint.search = new URLSearchParams(params).toString();
     const response = await fetch(endpoint, {
       method: 'GET',

@@ -38,9 +38,12 @@ function App() {
   
   const handleLogout = () => {
     localStorage.removeItem('acccess_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('last_refresh');
+    localStorage.removeItem('expires_in');
     setLoggedIn(false);
   };
-  const handleSearch = (q, type) => { 
+  const handleSearch = (q, type = 'album,artist,track') => { 
     searchSpotify(q, type)
       .then( res => setResults(() => res) )
   };

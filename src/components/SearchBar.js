@@ -9,14 +9,20 @@ import {Row, Col} from "react-bootstrap";
 
 function SearchBar({handleSearch}) {
     const [search, setSearch] = useState('');
-    const [searchType, setSearchType] = useState('album,artist,track'); //NOTE: Search Type is visual only at this point
+    const [searchType, setSearchType] = useState('album,artist,track'); //NOTE: Search Type is visual only at this point. See code in line 19-26 to use query filter instead of search type.
     const [year, setYear] = useState('');
     const pattern = "^[0-9]{4}(-[0-9]{4})?";
 
     function handleSubmit(event) {
         event.preventDefault();
         console.log(`Searching Spotify Web API${searchType == 'album,artist,track' ? '' : ' by '+searchType} for "${search}"`)
-        handleSearch(search, searchType);
+        // Append artist or album as query filter if searchType is specified
+        let filter = '';
+        if (searchType !== 'album,artist,track') {
+            filter = searchType +':';
+        }
+        handleSearch(filter + search//, /searchType //Once the app is capable of handling an album and artist result types, you can un-comment this section.
+        );
     };
     function handleSearchInput({target}) {
         setSearch(target.value)
