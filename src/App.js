@@ -3,23 +3,52 @@ import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Playlist from './components/Playlist';
 import Footer from './components/Footer';
-import { default as searchSpotify, createPlaylist, updatePlaylistItems, renamePlaylist } from './utils/SpotifyWebAPI';
-import { Navbar, NavbarBrand} from 'react-bootstrap';
+import { default as searchSpotify, createPlaylist, updatePlaylistItems, renamePlaylist, getUserData } from './utils/SpotifyWebAPI';
+import { checkForAuthCode, redirectToSpotifyAuthorize, checkToken} from './utils/SpotifyOAuth';import { Navbar, NavbarBrand} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 
 function App() {
   const [results, setResults] = useState([]);
-  const [tracklist, setTracklist] = useState([mockTrack, mockTrack]);
+  const [tracklist, setTracklist] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
   
-  const handleSearch = (q, type) => { 
+  useEffect( () => {
+    const checkLoginStatus = async () => {
+      await checkToken();
+      const hasAuthCode = await checkForAuthCode();
+      if(!hasAuthCode) {
+        setLoggedIn(false);
+        setUserInfo({});
+        //alert('Authentication error, please try refreshing the page or logging in again.');
+        console.log('Error verifying token.');
+      } else {
+        setLoggedIn(true);
+        const userData = await getUserData();
+        setUserInfo(userData);
+      }
+    
+    }
+    checkLoginStatus();
+  }, [])
+  
+  const handleLogout = () => {
+    localStorage.removeItem('acccess_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('last_refresh');
+    localStorage.removeItem('expires_in');
+    setLoggedIn(false);
+  };
+  const handleSearch = (q, type = 'album,artist,track') => { 
     searchSpotify(q, type)
       .then( res => setResults(() => res) )
   };
   const handleCreatePlaylist = (name) => {
-    return createPlaylist(name).then(res => {
+    return createPlaylist(name, userInfo.id).then(res => {
       res.ok ? console.log(`playlist "${name}" created.`) : console.log(`Could not save playlist "${name}". Response.ok=${res.ok} and Response.status=${res.status}`)
       return res.json();
     })
@@ -27,19 +56,19 @@ function App() {
   const handleRenamePlaylist = (playlist_id, newName) => {
     return renamePlaylist(playlist_id, newName).then(res => {
       res.ok ? console.log(`playlist renamed to ${newName}.`) : console.log(`Could not rename playlist id "${playlist_id}". Response.ok=${res.ok} and Response.status=${res.status}`)
-      return res.json();
+      //return res.json(); //The api to change playlist details returns an empty response body (result of json function) when successful and therefore no need to return it.
     })
   };
   const handleUpdatePlaylistItems = (playlist_id, tracklistURIs) => {
     return updatePlaylistItems(playlist_id, tracklistURIs).then(res => {
-      res.ok ? console.log('Playlist updated.') : console.log('Playlist update failed.  Response.ok=${res.ok} and Response.status=${res.status}')
+      res.ok ? console.log('Playlist updated.') : console.log(`Playlist update failed.  Response.ok=${res.ok} and Response.status=${res.status}`)
       return res.json();
     })
   };
 
   return (
     <div className="App">
-      <Navbar sticky='top' data-bs-theme="dark" className="bg-dark justify-content-center" >
+      <Navbar sticky='top' data-bs-theme="dark" className="bg-dark justify-content-end" >
         <NavbarBrand
           className="App-link"
           href='.'
@@ -47,7 +76,9 @@ function App() {
         >
           Jammming with Judy
         </NavbarBrand>
+        {loggedIn ? <Navbar.Text>Signed in as {userInfo.display_name} <button onClick={handleLogout}>logout</button></Navbar.Text> : <button onClick={redirectToSpotifyAuthorize}>login to Spotify</button>}
       </Navbar>
+
       <Navbar sticky="top" data-bs-theme="light" className="bg-dark justify-content-around" ><SearchBar handleSearch={handleSearch} /></Navbar>
       <Container fluid>
         <Row xs={1} md={2} >
@@ -69,13 +100,4 @@ function App() {
 }
 
 export default App;
-
-    const mockTrack = {
-      "track":"Get High",
-      "album":"Side Effects EP",
-      "artist":"Chris Travis",
-      "src":"https://i.scdn.co/image/ab67616d00004851ffa4064cb0e135b5e1ca41a2",
-      "altText":"Side Effects EP album art",
-      "uri":"spotify:track:2HEoWCdoCM6JfTaEGGgxXX"
-  }
   

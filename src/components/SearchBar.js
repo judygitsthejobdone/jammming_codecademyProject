@@ -9,14 +9,20 @@ import {Row, Col} from "react-bootstrap";
 
 function SearchBar({handleSearch}) {
     const [search, setSearch] = useState('');
-    const [searchType, setSearchType] = useState(''); //NOTE: Search Type is visual only at this point
+    const [searchType, setSearchType] = useState('album,artist,track'); //NOTE: Search Type is visual only at this point. See code in line 19-26 to use query filter instead of search type.
     const [year, setYear] = useState('');
     const pattern = "^[0-9]{4}(-[0-9]{4})?";
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(`Searching Spotify Web API${searchType} for "${search}"`)
-        handleSearch(search);
+        console.log(`Searching Spotify Web API${searchType == 'album,artist,track' ? '' : ' by '+searchType} for "${search}"`)
+        // Append artist or album as query filter if searchType is specified
+        let filter = '';
+        if (searchType !== 'album,artist,track') {
+            filter = searchType +':';
+        }
+        handleSearch(filter + search//, /searchType //Once the app is capable of handling an album and artist result types, you can un-comment this section.
+        );
     };
     function handleSearchInput({target}) {
         setSearch(target.value)
@@ -31,7 +37,7 @@ function SearchBar({handleSearch}) {
     function handleSearchType(event) {
         event.preventDefault();
         const {target} = event;
-        console.log(target.value)
+        //console.log(target.value)
         setSearchType(target.value);
     };
 
@@ -41,7 +47,7 @@ function SearchBar({handleSearch}) {
             <Container fluid ><Row>
                 <Col><FormGroup>
                     <FloatingLabel
-                        label={"Search"+searchType}
+                        label={`Search${searchType == 'album,artist,track' ? '' : ' by '+searchType}`}
                     >
                         <Form.Control 
                             id="search" 
@@ -80,11 +86,11 @@ function SearchBar({handleSearch}) {
                 autoClose="outside"
             >
                 <DropdownHeader>Limit search to...</DropdownHeader>
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="album" value=" by album" active={searchType == " by album" ? true : false}>Albums</Dropdown.Item>
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="artist" value=" by artist" active={searchType == " by artist" ? true : false}>Artists</Dropdown.Item>
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value=" by song" active={searchType == " by song" ? true : false}>Songs</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="album" value="album" active={searchType == "album" ? true : false}>Albums</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="artist" value="artist" active={searchType == "artist" ? true : false}>Artists</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value="track" active={searchType == "track" ? true : false}>Songs</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="any" value="" active={searchType == "" ? true : false} >Any</Dropdown.Item>     
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="any" value="album,artist,track" active={searchType == "album,artist,track" ? true : false} >Any</Dropdown.Item>     
             </SplitButton>
             </Col>
             </Row>

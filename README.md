@@ -31,7 +31,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - React
 - HTTP Requests and Responses
 - Spotify API
-- Authentication
+- OAuth 2.0
 
 ## Features Implemented
 - Static SearchBar and SearchResults (replaces requested "Tracklist") components
@@ -40,22 +40,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - mock API
 - Track Listing in The Component Tree
 - unidirectional dataflow 
-- Implement Playlists in The Component Tree
+- Playlists in The Component Tree
     - Static Playlist Component
     - Name/Rename input
     - Save to Spotify button
     - Tracks in Playlist with remove buttons
-- Implement styling api
+- Styling api
+- Spotify API
+  - Save playlist to user acct
+  - Search function
+  - Search for songs by Artist or Album title
+  - Add/delete songs from playlist (for playlists created by the app)
+  - Rename playlist (for the current playlist created by the app)
 
 ## In Progress
-- Implement save playlist to user acct (mock)
-- Implement Playlist renaming
-- Implement Adding Songs to custom playlist
-- Implement Removing Songs from custom playlist
+- Bug fixing
 
 ## Future Work
-- Implement Spotify API Search function
-- Implement Spotify API Save Playlist to user acct function
 - Test and debug
 - Review Project
 - Deploy on gh-pages
@@ -67,6 +68,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     - Album Result with click to search for album tracks
 - Refactor Artist and Album components to include option to add to playlist the top 5 tracks from artist or add full album instead of searching
 
+## Bug Fixes
+### Open
+  - Bug #002: RefreshToken api is not functioning
+  - Bug #004: When app initiates, the top right of screen says "Signed in as" and the button says "logout"
+### Complete
+  - Bug #001 [#SOLVED]: logged in at open but getting "access token expired" msg. Error causes no visible effect. Need a try/catch or something to run refreshToken before trying again and some kind of report on the error alert on-screen so the user isn't just dumbfounded.
+- Bug #003 [#SOLVED]: Uncaught runtime error when searching by artist or album.
+  <!--SpotifyWebAPI.js:72 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'items')
+    at processResponse (SpotifyWebAPI.js:72:1)
+    at searchSpotify (SpotifyWebAPI.js:64:1)
+    processResponse	@	SpotifyWebAPI.js:72
+    searchSpotify	@	SpotifyWebAPI.js:64
+    await in searchSpotify		
+    handleSearch	@	App.js:44
+    handleSubmit	@	SearchBar.js:19 -->
+    - Resolution: notes so far, this is caused by the difference in response object when searching for artist vs. track vs. album. In fact, for now I only want to get track-type responses but we can filter the responses using the query filters for the endpoint such as artist:alt-j to search for tracks by artist alt-j. Implemented query filters on 10/22/2025
 ## Available Scripts
 
 In the project directory, you can run:
