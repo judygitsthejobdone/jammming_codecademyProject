@@ -67,12 +67,17 @@ const checkForAuthCode = async () => {
         window.history.replaceState({}, '', updatedUrl);
         
     } else if (urlParams.get('error')) {console.log(`no code in response, error: ${urlParams.get('error')}`)}
-
+        
+    // Check if access token is already stored
     if (!localStorage.getItem('access_token')) { 
         return false
      } else {
-        await checkToken();
-        return true
+        console.log('Access token found in localStorage.');
+        const tokenStatus = await checkToken();
+        if (tokenStatus && tokenStatus.error) {
+            return false;
+        }
+        return true;
     };
 }
 
@@ -99,6 +104,7 @@ const getToken = async code => {
   
     const body = await fetch(token_endpoint, payload);
     const response = await body.json();
+    console.debug('Token response', response);
     if (body.ok) {
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('last_refresh', Date.now());
