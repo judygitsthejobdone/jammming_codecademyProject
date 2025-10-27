@@ -3,7 +3,10 @@ import { checkToken } from "./SpotifyOAuth";
 const access_token = () => localStorage.getItem('access_token');
 
 async function getUserData() {
-  await checkToken();
+  const tokenStatus = await checkToken();
+  if (tokenStatus && tokenStatus.error) {
+    return tokenStatus; // Return the error object
+  }
   const response = await fetch("https://api.spotify.com/v1/me", {
     method: 'GET',
     headers: { 'Authorization': 'Bearer ' + access_token() },
@@ -43,7 +46,10 @@ async function getUserData() {
 }
 
 async function searchSpotify(q,type) {
-  await checkToken(); 
+  const tokenStatus = await checkToken();
+  if (tokenStatus && tokenStatus.error) {
+    return []; // Return an empty array on error
+  }
     /** The code below takes the response and formats it into an array of result objects 
     */
     const endpoint = new URL('https://api.spotify.com/v1/search');
@@ -92,7 +98,10 @@ function processResponse(response) {
 }
 
 async function createPlaylist(name, user_id) {
-  await checkToken();
+  const tokenStatus = await checkToken();
+  if (tokenStatus && tokenStatus.error) {
+    return tokenStatus; // Return the error object
+  }
   const endpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
   const body = {
     "name": name, //required
@@ -111,7 +120,10 @@ async function createPlaylist(name, user_id) {
 }
 async function renamePlaylist(playlist_id, newName) {
   // https://developer.spotify.com/documentation/web-api/reference/change-playlist-details
-  await checkToken();
+  const tokenStatus = await checkToken();
+  if (tokenStatus && tokenStatus.error) {
+    return tokenStatus; // Return the error object
+  }
   const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}`;
   const body = {
     "name": newName,
@@ -131,7 +143,10 @@ async function updatePlaylistItems(playlist_id, tracklistURIs) {
   // To replace items, include uris as either a query parameter or in the request's body. 
   // Replacing items in a playlist will overwrite its existing items. 
   // This operation can be used for replacing or clearing items in a playlist.
-  await checkToken();
+  const tokenStatus = await checkToken();
+  if (tokenStatus && tokenStatus.error) {
+    return tokenStatus; // Return the error object
+  }
   const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
   const body = {
     "uris": tracklistURIs,

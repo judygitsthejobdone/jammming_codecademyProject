@@ -67,12 +67,17 @@ const checkForAuthCode = async () => {
         window.history.replaceState({}, '', updatedUrl);
         
     } else if (urlParams.get('error')) {console.log(`no code in response, error: ${urlParams.get('error')}`)}
-
+        
+    // Check if access token is already stored
     if (!localStorage.getItem('access_token')) { 
         return false
      } else {
-        await checkToken();
-        return true
+        console.log('Access token found in localStorage.');
+        const tokenStatus = await checkToken();
+        if (tokenStatus && tokenStatus.error) {
+            return false;
+        }
+        return true;
     };
 }
 
@@ -99,6 +104,7 @@ const getToken = async code => {
   
     const body = await fetch(token_endpoint, payload);
     const response = await body.json();
+    console.debug('Token response', response);
     if (body.ok) {
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('last_refresh', Date.now());
@@ -114,10 +120,15 @@ const refreshToken = async () => {
     // refresh token that has been previously stored
     const storedRefreshToken = localStorage.getItem('refresh_token');
     const url = "https://accounts.spotify.com/api/token";
-
+    
     // Defensive: log whether we have a refresh token stored
     // (In production you might remove this or obfuscate the token.)
     console.debug('Refreshing token, stored refresh_token present:', !!storedRefreshToken);
+
+    // If no refresh token is stored, cannot refresh
+    if (!storedRefreshToken) {
+        return false;
+    }
 
     const payload = {
     method: 'POST',
@@ -152,10 +163,15 @@ const refreshToken = async () => {
 }
 
 const checkToken = async () => {
-    const now = Date.now();
     const lastRefresh = localStorage.getItem('last_refresh');
+    if (!lastRefresh) {
+        console.debug('No last refresh time found in localStorage.');
+        return {error: 'no_last_refresh'};
+    }
+
     const expiresIn = Number(localStorage.getItem('expires_in'));
     // elapsed_time in seconds
+    const now = Date.now();
     const elapsed_time = lastRefresh ? (now - lastRefresh) / 1000 : 0;
 
     console.debug('checkToken', { now, lastRefresh, expiresIn, elapsed_time });
