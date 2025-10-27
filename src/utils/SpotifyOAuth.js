@@ -114,10 +114,15 @@ const refreshToken = async () => {
     // refresh token that has been previously stored
     const storedRefreshToken = localStorage.getItem('refresh_token');
     const url = "https://accounts.spotify.com/api/token";
-
+    
     // Defensive: log whether we have a refresh token stored
     // (In production you might remove this or obfuscate the token.)
     console.debug('Refreshing token, stored refresh_token present:', !!storedRefreshToken);
+
+    // If no refresh token is stored, cannot refresh
+    if (!storedRefreshToken) {
+        return false;
+    }
 
     const payload = {
     method: 'POST',
@@ -152,10 +157,15 @@ const refreshToken = async () => {
 }
 
 const checkToken = async () => {
-    const now = Date.now();
     const lastRefresh = localStorage.getItem('last_refresh');
+    if (!lastRefresh) {
+        console.debug('No last refresh time found in localStorage.');
+        return {error: 'no_last_refresh'};
+    }
+
     const expiresIn = Number(localStorage.getItem('expires_in'));
     // elapsed_time in seconds
+    const now = Date.now();
     const elapsed_time = lastRefresh ? (now - lastRefresh) / 1000 : 0;
 
     console.debug('checkToken', { now, lastRefresh, expiresIn, elapsed_time });
