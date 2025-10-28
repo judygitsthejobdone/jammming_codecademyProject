@@ -31,7 +31,7 @@ function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistIte
         setPlaylistName(() => target.value);
     }
     function removeTrack(indexToRemove) {
-        tracklistChange(tracklist.filter((val, index) => index != indexToRemove));
+        tracklistChange(tracklist.filter((val, index) => index !== indexToRemove));
         console.log(`Removed playlist index ${indexToRemove} from the tracklist.`);
         console.log(tracklist)
     }
@@ -44,7 +44,7 @@ function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistIte
           //code to update existing playlist
           
           // if name is not same as current playlist, option to renamePlaylist or createNew
-          if (playlistName != currentPlaylist.name) {
+          if (playlistName !== currentPlaylist.name) {
             setShowModal(true)
           } else {updatePlaylistItems(currentPlaylist.id, tracklistURIs)};
 
