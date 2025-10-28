@@ -15,7 +15,7 @@ function SearchBar({handleSearch}) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(`Searching Spotify Web API${searchType == 'album,artist,track' ? '' : ' by '+searchType} for "${search}"`)
+        console.log(`Searching Spotify Web API${searchType === 'album,artist,track' ? '' : ' by '+searchType} for "${search}"`)
         // Append artist or album as query filter if searchType is specified
         let filter = '';
         if (searchType !== 'album,artist,track') {
@@ -47,7 +47,7 @@ function SearchBar({handleSearch}) {
             <Container fluid ><Row>
                 <Col><FormGroup>
                     <FloatingLabel
-                        label={`Search${searchType == 'album,artist,track' ? '' : ' by '+searchType}`}
+                        label={`Search${searchType === 'album,artist,track' ? '' : ' by '+searchType}`}
                     >
                         <Form.Control 
                             id="search" 
@@ -86,11 +86,11 @@ function SearchBar({handleSearch}) {
                 autoClose="outside"
             >
                 <DropdownHeader>Limit search to...</DropdownHeader>
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="album" value="album" active={searchType == "album" ? true : false}>Albums</Dropdown.Item>
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="artist" value="artist" active={searchType == "artist" ? true : false}>Artists</Dropdown.Item>
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value="track" active={searchType == "track" ? true : false}>Songs</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="album" value="album" active={searchType === "album" ? true : false}>Albums</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="artist" value="artist" active={searchType === "artist" ? true : false}>Artists</Dropdown.Item>
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="song" value="track" active={searchType === "track" ? true : false}>Songs</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="any" value="album,artist,track" active={searchType == "album,artist,track" ? true : false} >Any</Dropdown.Item>     
+                <Dropdown.Item as="button" onClick={handleSearchType} eventKey="any" value="album,artist,track" active={searchType === "album,artist,track" ? true : false} >Any</Dropdown.Item>     
             </SplitButton>
             </Col>
             </Row>
