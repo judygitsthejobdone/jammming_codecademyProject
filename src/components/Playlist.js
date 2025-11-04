@@ -31,9 +31,8 @@ function Playlist({tracklist, tracklistChange, createPlaylist, updatePlaylistIte
         setPlaylistName(() => target.value);
     }
     function removeTrack(indexToRemove) {
-        tracklistChange(tracklist.filter((val, index) => index !== indexToRemove));
-        console.log(`Removed playlist index ${indexToRemove} from the tracklist.`);
-        console.log(tracklist)
+        console.log(`Removing playlist index ${indexToRemove}, ${tracklist[indexToRemove].track}, from the tracklist.`);
+        tracklistChange(tracklist.filter((_val, index) => index !== Number(indexToRemove)));
     }
     function handleSave() {     
         //code to save playlist
