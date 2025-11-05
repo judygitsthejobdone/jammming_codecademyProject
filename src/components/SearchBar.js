@@ -58,7 +58,7 @@ function SearchBar({handleSearch}) {
                             id="search" 
                             type="search"
                             size="lg" 
-                            placeholder="Track, Artist, or Genre" 
+                            placeholder="Track, Artist, or Album" 
                             value={search}
                             onChange={handleSearchInput}
                         ></Form.Control>

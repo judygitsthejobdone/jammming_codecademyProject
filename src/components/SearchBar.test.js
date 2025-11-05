@@ -3,13 +3,20 @@ import userEvent from '@testing-library/user-event';
 import SearchBar from './SearchBar';
 
 describe('SearchBar handleSearch integration (user-event)', () => {
-  test('calls handleSearch with plain query when defaults are used', async () => {
-    const user = userEvent.setup();
-    const handleSearch = jest.fn();
-    render(<SearchBar handleSearch={handleSearch} />);
+    // reused across tests
+    let searchInput, goButton, yearInput, toggle, handleSearch, user;
+    beforeEach(() => {
+        user = userEvent.setup();
+        handleSearch = jest.fn();
+        render(<SearchBar handleSearch={handleSearch} />);
 
-    const searchInput = screen.getByPlaceholderText(/Track, Artist, or Genre/i);
-    const goButton = screen.getByRole('button', { name: /go/i });
+        searchInput = screen.getByPlaceholderText(/Track, Artist, or Album/i);
+        goButton = screen.getByRole('button', { name: /go/i });
+        yearInput = screen.getByPlaceholderText(/e.g., 1999 or 1980-2001/i);
+        toggle = screen.getByRole('button', { name: /toggle dropdown/i });
+    });
+    
+  test('calls handleSearch with plain query when defaults are used', async () => {
 
     await user.type(searchInput, 'hello world');
     await user.click(goButton);
@@ -19,15 +26,8 @@ describe('SearchBar handleSearch integration (user-event)', () => {
   });
 
   test('prepends searchType and appends year when provided (artist + single year)', async () => {
-    const user = userEvent.setup();
-    const handleSearch = jest.fn();
-    render(<SearchBar handleSearch={handleSearch} />);
-
-    const searchInput = screen.getByPlaceholderText(/Track, Artist, or Genre/i);
-    const yearInput = screen.getByPlaceholderText(/e.g., 1999 or 1980-2001/i);
-
+    
     // open dropdown and choose Artists
-    const toggle = screen.getByRole('button', { name: /toggle dropdown/i });
     await user.click(toggle);
     const artistsItem = screen.getByText(/Artists/i);
 
@@ -35,7 +35,6 @@ describe('SearchBar handleSearch integration (user-event)', () => {
     await user.click(artistsItem);
     await user.type(yearInput, '1999');
 
-    const goButton = screen.getByRole('button', { name: /go/i });
     await user.click(goButton);
 
     expect(handleSearch).toHaveBeenCalledTimes(1);
@@ -43,15 +42,8 @@ describe('SearchBar handleSearch integration (user-event)', () => {
   });
 
   test('prepends album when album selected and accepts a year range', async () => {
-    const user = userEvent.setup();
-    const handleSearch = jest.fn();
-    render(<SearchBar handleSearch={handleSearch} />);
-
-    const searchInput = screen.getByPlaceholderText(/Track, Artist, or Genre/i);
-    const yearInput = screen.getByPlaceholderText(/e.g., 1999 or 1980-2001/i);
 
     // open dropdown and choose Albums
-    const toggle = screen.getByRole('button', { name: /toggle dropdown/i });
     await user.click(toggle);
     const albumsItem = screen.getByText(/Albums/i);
 
@@ -59,7 +51,6 @@ describe('SearchBar handleSearch integration (user-event)', () => {
     await user.click(albumsItem);
     await user.type(yearInput, '1980-2001');
 
-    const goButton = screen.getByRole('button', { name: /go/i });
     await user.click(goButton);
 
     expect(handleSearch).toHaveBeenCalledTimes(1);
@@ -67,20 +58,14 @@ describe('SearchBar handleSearch integration (user-event)', () => {
   });
 
   test('prepends track when Songs selected', async () => {
-    const user = userEvent.setup();
-    const handleSearch = jest.fn();
-    render(<SearchBar handleSearch={handleSearch} />);
 
-    const searchInput = screen.getByPlaceholderText(/Track, Artist, or Genre/i);
-
-    const toggle = screen.getByRole('button', { name: /toggle dropdown/i });
+    // open dropdown and choose Songs
     await user.click(toggle);
     const songsItem = screen.getByText(/Songs/i);
 
     await user.type(searchInput, 'Yellow Submarine');
     await user.click(songsItem);
 
-    const goButton = screen.getByRole('button', { name: /go/i });
     await user.click(goButton);
 
     expect(handleSearch).toHaveBeenCalledTimes(1);
@@ -88,20 +73,14 @@ describe('SearchBar handleSearch integration (user-event)', () => {
   });
 
   test('uses Any (no prefix) when Any selected', async () => {
-    const user = userEvent.setup();
-    const handleSearch = jest.fn();
-    render(<SearchBar handleSearch={handleSearch} />);
-
-    const searchInput = screen.getByPlaceholderText(/Track, Artist, or Genre/i);
-
-    const toggle = screen.getByRole('button', { name: /toggle dropdown/i });
+    
+    // open dropdown and choose Any
     await user.click(toggle);
     const anyItem = screen.getByText(/Any/i);
 
     await user.type(searchInput, 'lovely day');
     await user.click(anyItem);
 
-    const goButton = screen.getByRole('button', { name: /go/i });
     await user.click(goButton);
 
     expect(handleSearch).toHaveBeenCalledTimes(1);
