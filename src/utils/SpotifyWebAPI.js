@@ -46,12 +46,13 @@ async function getUserData() {
 }
 
 async function searchSpotify(q,type) {
+  // Function to search Spotify's catalog
+  // Documentation: https://developer.spotify.com/documentation/web-api/reference/search
   const tokenStatus = await checkToken();
   if (tokenStatus && tokenStatus.error) {
     return []; // Return an empty array on error
   }
-    /** The code below takes the response and formats it into an array of result objects 
-    */
+// API call
     const endpoint = new URL('https://api.spotify.com/v1/search');
     const params = {
       q: q,
@@ -72,6 +73,8 @@ async function searchSpotify(q,type) {
     }
 }
 
+/** The code below takes the response and formats it into an array of result objects 
+    */
 function processResponse(response) {
     const resultsArray = [];
     response.tracks.items.forEach( item => {

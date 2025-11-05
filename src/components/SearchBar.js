@@ -15,13 +15,18 @@ function SearchBar({handleSearch}) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(`Searching Spotify Web API${searchType === 'album,artist,track' ? '' : ' by '+searchType} for "${search}"`)
+        console.log(`Searching Spotify Web API${searchType === 'album,artist,track' ? '' : ' by '+searchType} for "${search}"${year ? ' for year(s) '+year : ''}`);
+        let query = search;
+       
         // Append artist or album as query filter if searchType is specified
-        let filter = '';
         if (searchType !== 'album,artist,track') {
-            filter = searchType +':';
+            query = searchType + ':' + query;
         }
-        handleSearch(filter + search//, /searchType //Once the app is capable of handling an album and artist result types, you can un-comment this section.
+        // Append year filter if specified
+         if (year) {
+            query += ` year:${year}`;
+        }
+        handleSearch(query //, /searchType //Once the app is capable of handling an album and artist result types, you can un-comment this section.
         );
     };
     function handleSearchInput({target}) {
@@ -53,7 +58,7 @@ function SearchBar({handleSearch}) {
                             id="search" 
                             type="search"
                             size="lg" 
-                            placeholder="Track, Artist, or Genre" 
+                            placeholder="Track, Artist, or Album" 
                             value={search}
                             onChange={handleSearchInput}
                         ></Form.Control>
